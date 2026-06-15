@@ -225,13 +225,13 @@ export default function SessionClient({
   }
 
   return (
-    <div className="flex flex-col flex-1 bg-zinc-50 dark:bg-zinc-950 font-sans min-h-[calc(100vh-64px)]">
+    <div className="flex flex-col flex-1 bg-paper font-sans min-h-[calc(100vh-64px)] text-ink-primary animate-fade-in">
       {/* Top Navigation */}
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-zinc-200 bg-white/85 px-4 py-3 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/85">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-rule bg-paper/90 px-4 py-3 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.push(`/courses/${courseId}`)}
-            className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+            className="rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-paper-hover"
             aria-label="Kembali ke course"
           >
             <svg
@@ -246,16 +246,16 @@ export default function SessionClient({
             </svg>
           </button>
           <div>
-            <h1 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 leading-tight">
+            <h1 className="text-sm font-semibold text-ink-primary leading-tight">
               Sesi Socratic: {topicTitle}
             </h1>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-ink-muted">
               {courseName} {difficulty && `• ${difficulty.toUpperCase()}`}
             </p>
           </div>
         </div>
         {sessionStarted && learningGoal && (
-          <div className="hidden sm:block max-w-sm rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-400 truncate">
+          <div className="hidden sm:block max-w-sm rounded-full bg-brand-accent-2/15 px-3 py-1 text-xs font-semibold text-brand-accent-2-deep truncate">
             Target: {learningGoal}
           </div>
         )}
@@ -267,16 +267,16 @@ export default function SessionClient({
           /* Landing Screen (Setup Turn) */
           <div className="flex flex-col flex-1 items-center justify-center py-8 max-w-2xl mx-auto">
             {/* Socratic Info Banner */}
-            <div className="mb-8 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-6 text-zinc-700 dark:border-indigo-900/40 dark:bg-indigo-950/20 dark:text-zinc-300">
+            <div className="mb-8 rounded-3xl border border-brand-accent-2/20 bg-brand-accent-2/5 p-6 text-ink-primary">
               <div className="flex gap-3">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500 text-white font-bold text-sm">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-accent-2 text-white font-bold text-sm shadow-sm">
                   ?
                 </span>
                 <div>
-                  <h3 className="font-semibold text-indigo-900 dark:text-indigo-300 mb-1">
+                  <h3 className="font-bold text-brand-accent-2-deep mb-1">
                     Tentang Metode Socratic Sabi
                   </h3>
-                  <p className="text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed text-ink-primary/95">
                     Sabi menggunakan metode pembelajaran Socratic. Kami <strong>tidak memberikan jawaban langsung</strong>. 
                     Tutor AI kami akan memandu Anda melalui dialog kritis agar Anda dapat memahami konsep 
                     dengan kata-kata dan penalaran Anda sendiri.
@@ -286,17 +286,17 @@ export default function SessionClient({
             </div>
 
             {/* Initial Explanation Form */}
-            <div className="w-full bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50 mb-2">
+            <div className="w-full card bg-paper-elevated p-6">
+              <h2 className="text-lg font-bold text-ink-primary mb-2">
                 Tulis penjelasan awal kamu tentang topik ini
               </h2>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4 leading-relaxed">
+              <p className="text-sm text-ink-muted mb-4 leading-relaxed">
                 Jelaskan apa yang kamu ketahui mengenai <strong>&ldquo;{topicTitle}&rdquo;</strong> saat ini. 
                 Tuliskan minimal 10 karakter. Tutor akan menelaah pemahamanmu untuk memulainya.
               </p>
 
               {apiError && (
-                <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/30 dark:text-red-400">
+                <div className="mb-4 rounded-xl border border-brand-accent-3/20 bg-brand-accent-3/5 p-3.5 text-xs text-brand-accent-3-deep">
                   {apiError}
                 </div>
               )}
@@ -308,25 +308,25 @@ export default function SessionClient({
                   placeholder="Tulis pemahamanmu di sini..."
                   rows={6}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-indigo-500 focus:bg-white dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-indigo-400 focus:ring-1 focus:ring-indigo-500"
+                  className="form-input font-sans py-3 px-4 resize-none focus:ring-1"
                 />
-                <div className="absolute bottom-3 right-3 text-xs text-zinc-400 bg-white/85 dark:bg-zinc-900/85 px-1.5 py-0.5 rounded">
+                <div className="absolute bottom-3 right-3 text-xs text-ink-muted bg-paper/85 px-1.5 py-0.5 rounded border border-rule">
                   {inputValue.length} / {charLimit}
                 </div>
               </div>
 
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-xs text-zinc-400">
+                <span className="text-xs text-ink-muted">
                   Minimal 10, maksimal 2000 karakter.
                 </span>
                 <button
                   onClick={handleStartSession}
                   disabled={isLoading || inputValue.length < 10 || inputValue.length > 2000}
-                  className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-zinc-200"
+                  className="btn btn--cyan"
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white dark:text-zinc-950" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
@@ -341,17 +341,17 @@ export default function SessionClient({
           </div>
         ) : (
           /* Chat Interface */
-          <div className="flex flex-col flex-1 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden min-h-[450px]">
+          <div className="flex flex-col flex-1 card bg-paper-elevated overflow-hidden min-h-[450px]">
             {/* Learning Goal Banner */}
-            <div className="bg-indigo-50/40 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 dark:bg-indigo-950/10 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-indigo-700 dark:text-indigo-400">
+            <div className="bg-brand-accent-2/5 px-4 py-3 border-b border-rule flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-accent-2-deep">
                 Target Pembelajaran
               </span>
-              <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full dark:bg-indigo-900/60 dark:text-indigo-300">
+              <span className="text-xs bg-brand-accent-2/15 text-brand-accent-2-deep px-2.5 py-0.5 rounded-full border border-brand-accent-2/20 font-bold">
                 Ronde {roundNumber}
               </span>
             </div>
-            <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <div className="px-4 py-3 border-b border-rule bg-paper/50 text-sm font-medium text-ink-primary">
               {learningGoal}
             </div>
 
@@ -367,8 +367,8 @@ export default function SessionClient({
                     <div
                       className={`flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-lg text-sm font-bold shadow-sm ${
                         isUser
-                          ? 'bg-zinc-900 text-white dark:bg-zinc-700'
-                          : 'bg-indigo-600 text-white'
+                          ? 'bg-paper border border-rule text-ink-primary'
+                          : 'bg-brand-accent text-ink-primary border border-brand-accent-deep'
                       }`}
                     >
                       {isUser ? 'M' : 'T'}
@@ -376,8 +376,8 @@ export default function SessionClient({
                     <div
                       className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         isUser
-                          ? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100 rounded-tr-none'
-                          : 'bg-indigo-50/50 border border-indigo-100 text-zinc-900 dark:bg-zinc-950/40 dark:border-indigo-950/60 dark:text-zinc-100 rounded-tl-none'
+                          ? 'bg-brand-accent-2/10 border border-brand-accent-2/20 text-ink-primary rounded-tr-none'
+                          : 'bg-brand-accent/10 border border-brand-accent/20 text-ink-primary rounded-tl-none'
                       }`}
                     >
                       {msg.content}
@@ -389,16 +389,16 @@ export default function SessionClient({
               {/* Thought Process Loading Bubble */}
               {isLoading && (
                 <div className="flex gap-3 max-w-[85%] mr-auto items-start">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white text-sm font-bold">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-accent text-ink-primary border border-brand-accent-deep text-sm font-bold">
                     T
                   </div>
-                  <div className="rounded-2xl rounded-tl-none border border-zinc-200 bg-zinc-50 px-4 py-3 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1">
+                  <div className="rounded-2xl rounded-tl-none border border-rule bg-paper px-4 py-3 text-ink-muted">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-brand-accent-deep uppercase tracking-wider mb-1">
                       <span>Tutor sedang merenung</span>
                       <span className="flex gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-accent-deep animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-accent-deep animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-accent-deep animate-bounce" style={{ animationDelay: '300ms' }}></span>
                       </span>
                     </div>
                     <p className="text-sm leading-normal">Mengkaji pemahamanmu untuk memformulasikan pertanyaan Socratic selanjutnya...</p>
@@ -411,13 +411,13 @@ export default function SessionClient({
 
             {/* API Warning/Error message */}
             {apiError && (
-              <div className="px-4 py-3 bg-red-50 text-xs text-red-600 border-t border-red-100 dark:bg-red-950/20 dark:text-red-400 dark:border-red-900/30">
+              <div className="px-4 py-3 bg-brand-accent-3/5 text-xs text-brand-accent-3-deep border-t border-brand-accent-3/20">
                 {apiError}
               </div>
             )}
 
             {/* Chat Input Field */}
-            <div className="border-t border-zinc-200 dark:border-zinc-800 p-4 bg-zinc-50 dark:bg-zinc-900/60">
+            <div className="border-t border-rule p-4 bg-paper">
               <div className="relative">
                 <textarea
                   value={inputValue}
@@ -425,25 +425,25 @@ export default function SessionClient({
                   placeholder="Ketik penjelasan tambahan atau jawabanmu..."
                   rows={3}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-zinc-200 bg-white p-3 pr-16 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-indigo-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-indigo-400"
+                  className="form-input !bg-paper-elevated p-3 pr-16 text-sm text-ink-primary placeholder-ink-muted outline-none transition-colors"
                 />
-                <div className="absolute bottom-3 right-3 text-xs text-zinc-400 bg-white/80 dark:bg-zinc-950/80 px-1 rounded">
+                <div className="absolute bottom-3 right-3 text-xs text-ink-muted bg-paper/85 px-1.5 py-0.5 rounded border border-rule">
                   {inputValue.length} / {charLimit}
                 </div>
               </div>
 
               <div className="mt-3 flex items-center justify-between">
-                <span className="text-xs text-zinc-400">
+                <span className="text-xs text-ink-muted">
                   Minimal 10, maksimal 3000 karakter.
                 </span>
                 <button
                   onClick={handleSubmitExplanation}
                   disabled={isLoading || inputValue.length < 10 || inputValue.length > 3000}
-                  className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-zinc-200"
+                  className="btn btn--cyan"
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white dark:text-zinc-950" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
@@ -461,10 +461,9 @@ export default function SessionClient({
 
       {/* Celebratory Screen / Mastery Card Generator Modal */}
       {showCelebration && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-primary/40 backdrop-blur-md p-4 animate-fade-in">
           {/* Confetti floating style container */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Custom CSS for simple confetti */}
             <div className="absolute top-0 left-1/4 w-3 h-3 bg-red-400 rounded-full animate-ping opacity-75"></div>
             <div className="absolute top-12 left-2/3 w-2.5 h-2.5 bg-yellow-400 rotate-45 animate-bounce"></div>
             <div className="absolute top-24 left-1/3 w-3 h-1.5 bg-green-400 animate-pulse"></div>
@@ -472,66 +471,66 @@ export default function SessionClient({
             <div className="absolute top-16 left-1/10 w-2 h-2.5 bg-purple-400 rotate-12 animate-ping"></div>
           </div>
 
-          <div className="relative w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-center flex flex-col items-center">
+          <div className="relative w-full max-w-lg rounded-[var(--radius-card)] bg-paper p-6 shadow-2xl border border-rule text-center flex flex-col items-center text-ink-primary">
             {/* Stamp Icon / Celebrating Seal */}
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-mint/15 text-mint-deep border border-mint/25 shadow-sm">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
               </svg>
             </div>
 
-            <h2 className="text-2xl font-extrabold text-zinc-900 dark:text-zinc-50 tracking-tight">
+            <h2 className="text-2xl font-extrabold text-ink-primary tracking-tight">
               Selamat! Kamu Menguasai Topik!
             </h2>
-            <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-1.5 text-sm text-ink-muted">
               Penjelasanmu telah dianalisis dan dinyatakan memenuhi target pembelajaran setelah {roundNumber} ronde.
             </p>
 
             {/* The Stamp/Mastery Card Container */}
             <div className="my-6 w-full relative">
               {isGeneratingCard ? (
-                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50 dark:bg-zinc-950">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent mb-2"></div>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Menerbitkan Kartu Paspor Pemahaman...</p>
+                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-rule rounded-2xl bg-paper-elevated">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-accent-2 border-t-transparent mb-2"></div>
+                  <p className="text-xs text-ink-muted font-medium">Menerbitkan Kartu Paspor Pemahaman...</p>
                 </div>
               ) : masteryDetails ? (
                 /* Stamp Passport Card Design */
-                <div className="relative overflow-hidden bg-amber-50/20 border-2 border-dashed border-amber-500/60 dark:border-amber-600/60 dark:bg-amber-950/10 p-5 rounded-2xl text-left shadow-sm">
+                <div className="relative overflow-hidden bg-brand-accent/5 border-2 border-dashed border-brand-accent/50 p-5 rounded-2xl text-left shadow-sm">
                   {/* Wax Seal Seal Overlay */}
-                  <div className="absolute top-2 right-2 flex rotate-12 border-2 border-emerald-600 text-emerald-600 font-serif text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-widest bg-white dark:bg-zinc-900">
+                  <div className="absolute top-2 right-2 flex rotate-12 border-2 border-brand-accent-3 text-brand-accent-3 font-serif text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-widest bg-paper">
                     SABI MASTERED
                   </div>
 
-                  <div className="text-[10px] font-bold text-amber-700/80 dark:text-amber-500/80 uppercase tracking-widest mb-1.5">
+                  <div className="text-[10px] font-bold text-brand-accent-deep uppercase tracking-widest mb-1.5">
                     Kartu Paspor Pemahaman
                   </div>
-                  <h3 className="font-extrabold text-base text-zinc-800 dark:text-zinc-100 font-serif leading-tight">
+                  <h3 className="font-extrabold text-base text-ink-primary font-serif leading-tight">
                     {topicTitle}
                   </h3>
-                  <div className="text-xs text-zinc-400 dark:text-zinc-500 mb-3">
+                  <div className="text-xs text-ink-muted mb-3">
                     Mata Kuliah: {courseName}
                   </div>
 
-                  <blockquote className="border-l-2 border-amber-400/80 pl-3 italic text-zinc-700 dark:text-zinc-300 text-xs leading-relaxed mb-4">
+                  <blockquote className="border-l-2 border-brand-accent/60 pl-3 italic text-ink-primary/95 text-xs leading-relaxed mb-4">
                     &ldquo;{masteryDetails.mastery_card_text}&rdquo;
                   </blockquote>
 
                   {/* SM-2 Metadata Stamp Footer */}
-                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-dashed border-zinc-200 dark:border-zinc-800 text-[10px] font-medium text-zinc-500 dark:text-zinc-400">
+                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-dashed border-rule text-[10px] font-medium text-ink-muted">
                     <div>
-                      <span className="block text-zinc-400 uppercase">Interval Review</span>
-                      <span className="text-zinc-700 dark:text-zinc-200 font-mono font-bold text-xs">1 Hari (SM-2)</span>
+                      <span className="block text-ink-muted uppercase">Interval Review</span>
+                      <span className="text-ink-primary font-mono font-bold text-xs">1 Hari (SM-2)</span>
                     </div>
                     <div>
-                      <span className="block text-zinc-400 uppercase">Review Berikutnya</span>
-                      <span className="text-zinc-700 dark:text-zinc-200 font-mono font-bold text-xs">
+                      <span className="block text-ink-muted uppercase">Review Berikutnya</span>
+                      <span className="text-ink-primary font-mono font-bold text-xs">
                         {masteryDetails.next_review_date}
                       </span>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="p-4 text-xs text-red-500 bg-red-50 dark:bg-red-950/20 rounded-xl">
+                <div className="p-4 text-xs text-brand-accent-3-deep bg-brand-accent-3/5 rounded-xl border border-brand-accent-3/20">
                   Gagal mendapatkan data paspor mastery.
                 </div>
               )}
@@ -542,14 +541,14 @@ export default function SessionClient({
               <button
                 onClick={handleCopyShareLink}
                 disabled={!masteryDetails}
-                className="flex items-center justify-center gap-2 w-full rounded-xl border border-zinc-200 hover:border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:text-zinc-900 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors disabled:opacity-50"
+                className="btn btn--soft btn--ink w-full"
               >
                 {copiedLink ? (
                   <>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 text-emerald-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 text-mint-deep">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
-                    <span className="text-emerald-600 font-bold">Tersalin!</span>
+                    <span className="text-mint-deep font-bold">Tersalin!</span>
                   </>
                 ) : (
                   <>
@@ -564,16 +563,16 @@ export default function SessionClient({
               <button
                 onClick={handleShareToFeed}
                 disabled={!masteryDetails || isSharingFeed || hasSharedFeed}
-                className="flex items-center justify-center gap-2 w-full rounded-xl bg-indigo-50 border border-indigo-100 hover:bg-indigo-100/80 px-4 py-2.5 text-sm font-semibold text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-900/60 dark:text-indigo-400 dark:hover:bg-indigo-900/40 transition-colors disabled:opacity-60"
+                className="btn btn--soft btn--cyan w-full"
               >
                 {isSharingFeed ? (
                   <>
-                    <div className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent"></div>
+                    <div className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-brand-accent-2 border-t-transparent"></div>
                     Membagikan...
                   </>
                 ) : hasSharedFeed ? (
                   <>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 text-indigo-600 dark:text-indigo-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 text-brand-accent-2-deep">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                     </svg>
                     Berhasil Dibagikan ke Feed!
@@ -591,7 +590,7 @@ export default function SessionClient({
 
               <button
                 onClick={() => router.push(`/courses/${courseId}`)}
-                className="w-full rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-zinc-200 transition-colors mt-2"
+                className="btn btn--pear w-full mt-2"
               >
                 Selesai
               </button>
