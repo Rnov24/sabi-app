@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 
-const MODEL = 'gemini-3.0-flash'
+const MODEL = 'gemini-3-flash-preview'
 const MAX_RETRIES = 2
 const TIMEOUT_MS = 45_000
 
