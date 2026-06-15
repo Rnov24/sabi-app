@@ -4,9 +4,15 @@ export function ok<T>(data: T, status = 200) {
   return NextResponse.json({ data }, { status })
 }
 
-export function err(code: string, message: string, status = 500) {
+export function err(code: string, message: string, status = 500, details?: any) {
   return NextResponse.json(
-    { error: { code, message } },
+    { 
+      error: { 
+        code, 
+        message,
+        ...(details ? { details } : {})
+      } 
+    },
     { status }
   )
 }

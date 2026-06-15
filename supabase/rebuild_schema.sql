@@ -148,6 +148,10 @@ CREATE INDEX idx_mastery_events_slug ON public.mastery_events(public_slug);
 CREATE INDEX idx_mastery_events_topic_id ON public.mastery_events(topic_id);
 CREATE INDEX idx_llm_logs_created ON public.llm_logs(created_at);
 CREATE INDEX idx_feed_reactions_post_id ON public.feed_reactions(post_id);
+CREATE INDEX idx_course_members_course_id ON public.course_members(course_id);
+CREATE INDEX idx_peer_posts_course_id ON public.peer_posts(course_id);
+CREATE INDEX idx_peer_posts_mastery_event_id ON public.peer_posts(mastery_event_id);
+CREATE INDEX idx_llm_logs_user_id ON public.llm_logs(user_id);
 
 -- ============================================================
 -- 4. TRIGGER FUNCTION FOR NEW USER SIGNUPS
@@ -192,6 +196,23 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
+-- Create security definer function to check course membership without RLS cycles
+-- Create security definer function to check course membership without RLS cycles
+CREATE OR REPLACE FUNCTION public.is_course_member(p_course_id UUID, p_user_id UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  -- Security best practice: ensure the caller can only query their own membership
+  IF p_user_id != (SELECT auth.uid()) THEN
+    RETURN FALSE;
+  END IF;
+
+  RETURN EXISTS (
+    SELECT 1 FROM public.course_members
+    WHERE course_id = p_course_id AND user_id = p_user_id
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+
 -- ============================================================
 -- 6. ROW LEVEL SECURITY (RLS) POLICIES
 -- ============================================================
@@ -210,37 +231,49 @@ ALTER TABLE public.feed_reactions ENABLE ROW LEVEL SECURITY;
 
 -- Profiles Policies
 CREATE POLICY "Users can view own profile" ON public.profiles
-  FOR SELECT USING (auth.uid() = id);
+  FOR SELECT USING ((SELECT auth.uid()) = id);
 CREATE POLICY "Users can update own profile" ON public.profiles
-  FOR UPDATE USING (auth.uid() = id);
+  FOR UPDATE USING ((SELECT auth.uid()) = id);
 
 -- Courses Policies
-CREATE POLICY "Users can view own courses" ON public.courses
-  FOR SELECT USING (auth.uid() = user_id AND deleted_at IS NULL);
+CREATE POLICY "Users can view own or joined courses" ON public.courses
+  FOR SELECT USING (
+    ((SELECT auth.uid()) = user_id AND deleted_at IS NULL)
+    OR
+    public.is_course_member(id, (SELECT auth.uid()))
+  );
+CREATE POLICY "Anyone can lookup course by join code" ON public.courses
+  FOR SELECT USING (
+    join_code IS NOT NULL AND deleted_at IS NULL
+  );
 CREATE POLICY "Users can create courses" ON public.courses
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can update own courses" ON public.courses
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can delete own courses" ON public.courses
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR DELETE USING ((SELECT auth.uid()) = user_id);
 
 -- Topics Policies
-CREATE POLICY "Users can view topics of own courses" ON public.topics
+CREATE POLICY "Users can view topics of own or joined courses" ON public.topics
   FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM public.courses
-      WHERE public.courses.id = topics.course_id
-      AND public.courses.user_id = auth.uid()
-      AND public.courses.deleted_at IS NULL
+    topics.deleted_at IS NULL
+    AND (
+      EXISTS (
+        SELECT 1 FROM public.courses
+        WHERE courses.id = topics.course_id
+        AND courses.user_id = (SELECT auth.uid())
+        AND courses.deleted_at IS NULL
+      )
+      OR
+      public.is_course_member(topics.course_id, (SELECT auth.uid()))
     )
-    AND topics.deleted_at IS NULL
   );
 CREATE POLICY "Users can create topics in own courses" ON public.topics
   FOR INSERT WITH CHECK (
     EXISTS (
       SELECT 1 FROM public.courses
       WHERE public.courses.id = topics.course_id
-      AND public.courses.user_id = auth.uid()
+      AND public.courses.user_id = (SELECT auth.uid())
     )
   );
 CREATE POLICY "Users can update topics in own courses" ON public.topics
@@ -248,7 +281,7 @@ CREATE POLICY "Users can update topics in own courses" ON public.topics
     EXISTS (
       SELECT 1 FROM public.courses
       WHERE public.courses.id = topics.course_id
-      AND public.courses.user_id = auth.uid()
+      AND public.courses.user_id = (SELECT auth.uid())
     )
   );
 CREATE POLICY "Users can delete topics in own courses" ON public.topics
@@ -256,27 +289,29 @@ CREATE POLICY "Users can delete topics in own courses" ON public.topics
     EXISTS (
       SELECT 1 FROM public.courses
       WHERE public.courses.id = topics.course_id
-      AND public.courses.user_id = auth.uid()
+      AND public.courses.user_id = (SELECT auth.uid())
     )
   );
 
 -- Mastery Events Policies
 CREATE POLICY "Users can view own mastery events" ON public.mastery_events
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can create mastery events" ON public.mastery_events
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can update own mastery events" ON public.mastery_events
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Anyone can view mastery cards by slug" ON public.mastery_events
   FOR SELECT USING (public_slug IS NOT NULL);
 
 -- Peer Posts Policies
-CREATE POLICY "Course members can view posts" ON public.peer_posts
+CREATE POLICY "Course owner or members can view posts" ON public.peer_posts
   FOR SELECT USING (
+    public.is_course_member(peer_posts.course_id, (SELECT auth.uid()))
+    OR
     EXISTS (
-      SELECT 1 FROM public.course_members
-      WHERE public.course_members.course_id = peer_posts.course_id
-      AND public.course_members.user_id = auth.uid()
+      SELECT 1 FROM public.courses
+      WHERE courses.id = peer_posts.course_id
+      AND courses.user_id = (SELECT auth.uid())
     )
   );
 CREATE POLICY "Users can create posts from own mastery" ON public.peer_posts
@@ -284,38 +319,47 @@ CREATE POLICY "Users can create posts from own mastery" ON public.peer_posts
     EXISTS (
       SELECT 1 FROM public.mastery_events
       WHERE public.mastery_events.id = peer_posts.mastery_event_id
-      AND public.mastery_events.user_id = auth.uid()
+      AND public.mastery_events.user_id = (SELECT auth.uid())
     )
   );
 
 -- Course Members Policies
 CREATE POLICY "Members can view course members" ON public.course_members
   FOR SELECT USING (
+    (SELECT auth.uid()) = user_id
+    OR
     EXISTS (
-      SELECT 1 FROM public.course_members cm
-      WHERE cm.course_id = course_members.course_id
-      AND cm.user_id = auth.uid()
+      SELECT 1 FROM public.courses
+      WHERE courses.id = course_members.course_id
+      AND courses.user_id = (SELECT auth.uid())
     )
   );
 CREATE POLICY "Users can join courses" ON public.course_members
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((SELECT auth.uid()) = user_id);
 
 -- Feed Reactions Policies
 CREATE POLICY "Users can view feed reactions" ON public.feed_reactions
   FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.peer_posts p
-      JOIN public.course_members cm ON p.course_id = cm.course_id
       WHERE p.id = feed_reactions.post_id
-      AND cm.user_id = auth.uid()
+      AND (
+        public.is_course_member(p.course_id, (SELECT auth.uid()))
+        OR
+        EXISTS (
+          SELECT 1 FROM public.courses c
+          WHERE c.id = p.course_id
+          AND c.user_id = (SELECT auth.uid())
+        )
+      )
     )
   );
 CREATE POLICY "Users can insert own reactions" ON public.feed_reactions
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can update own reactions" ON public.feed_reactions
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((SELECT auth.uid()) = user_id);
 CREATE POLICY "Users can delete own reactions" ON public.feed_reactions
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR DELETE USING ((SELECT auth.uid()) = user_id);
 
 -- Reminder logs, rate limits, llm logs: service role only
 CREATE POLICY "Service role only" ON public.reminder_logs FOR ALL USING (false);

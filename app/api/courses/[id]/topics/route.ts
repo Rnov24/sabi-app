@@ -45,25 +45,31 @@ export const GET = withErrorHandler(async (
     }
   }
 
-  // Get topics with mastery status
-  const { data: topics, error } = await supabase
+  // Get topics with mastery status (filtered to current user only)
+  let topicsQuery = supabase
     .from('topics')
     .select(`
       id, title, parent_topic, difficulty, display_order, created_at,
       mastery_events (
-        id, created_at, next_review_date, public_slug
+        id, user_id, created_at, next_review_date, public_slug
       )
     `)
     .eq('course_id', id)
     .is('deleted_at', null)
     .order('display_order', { ascending: true })
 
+  const { data: topics, error } = await topicsQuery
+
   if (error) throw error
 
   const enriched = (topics || []).map((t: any) => {
+    // Filter mastery events to current user only (for shared courses)
+    const userMasteryEvents = (t.mastery_events || []).filter(
+      (me: any) => me.user_id === user.id
+    )
     // Sort mastery events by created_at descending to get the latest one
-    const latestMastery = t.mastery_events && t.mastery_events.length > 0
-      ? [...t.mastery_events].sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0]
+    const latestMastery = userMasteryEvents.length > 0
+      ? [...userMasteryEvents].sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0]
       : null;
 
     return {

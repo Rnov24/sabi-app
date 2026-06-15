@@ -30,7 +30,17 @@ export function withErrorHandler(handler: RouteHandler): RouteHandler {
       }
 
       console.error('Unhandled error:', error)
-      return err('INTERNAL_ERROR', 'An unexpected error occurred', 500)
+      
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      const details = (error as any)?.details || null
+      const hint = (error as any)?.hint || null
+      
+      return err(
+        'INTERNAL_ERROR',
+        errorMessage || 'An unexpected error occurred',
+        500,
+        details || hint ? { details, hint } : undefined
+      )
     }
   }
 }

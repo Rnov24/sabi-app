@@ -15,7 +15,7 @@ export default async function FeedPage({ params }: PageProps) {
   try {
     user = await getAuthUser()
   } catch {
-    redirect('/auth')
+    redirect('/login')
   }
 
   const supabase = await createClient()
