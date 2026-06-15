@@ -83,10 +83,8 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     throw new ValidationError('Maximum 5 active courses allowed')
   }
 
-  // Generate a random 6-character uppercase alphanumeric join code for syllabus courses
-  const join_code = validated.source_type === 'syllabus'
-    ? Math.random().toString(36).substring(2, 8).toUpperCase()
-    : null
+  // Generate a random 6-character uppercase alphanumeric join code for all courses
+  const join_code = Math.random().toString(36).substring(2, 8).toUpperCase()
 
   const { data, error } = await supabase
     .from('courses')
