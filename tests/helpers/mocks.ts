@@ -77,5 +77,5 @@ vi.mock('@/lib/auth', () => {
 
 export function createMockRequest(path: string, options: RequestInit = {}) {
   const url = `http://localhost:3000${path}`
-  return new NextRequest(url, options)
+  return new NextRequest(url, options as any)
 }
