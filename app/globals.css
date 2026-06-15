@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark Midnight Violet Base Colors */
+  --background: oklch(13% 0.01 270);
+  --foreground: oklch(96% 0.005 270);
+
+  /* Sabi Hallmark Dark Midnight Violet Tokens */
+  --paper: oklch(13% 0.01 270);
+  --paper-elevated: oklch(16% 0.012 270);
+  --paper-hover: oklch(19% 0.014 270);
+  
+  --rule: oklch(22% 0.01 270);
+  --rule-active: oklch(35% 0.012 270);
+  
+  --ink-primary: oklch(96% 0.005 270);
+  --ink-muted: oklch(65% 0.008 270);
+  
+  --brand-accent: oklch(70% 0.18 270);
+  --brand-accent-glow: oklch(70% 0.18 270 / 0.15);
+  --brand-accent-hover: oklch(75% 0.19 270);
 }
 
 @theme inline {
@@ -10,17 +26,22 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  --color-paper: var(--paper);
+  --color-paper-elevated: var(--paper-elevated);
+  --color-paper-hover: var(--paper-hover);
+  --color-rule: var(--rule);
+  --color-rule-active: var(--rule-active);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-muted: var(--ink-muted);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-glow: var(--brand-accent-glow);
+  --color-brand-accent-hover: var(--brand-accent-hover);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
+
