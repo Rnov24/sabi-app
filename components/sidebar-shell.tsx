@@ -92,13 +92,13 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
               onClick={() => {
                 if (onClickItem) onClickItem()
               }}
-              className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 ${
+              className={`flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-140 ${
                 isActive
-                  ? 'text-violet-400 bg-violet-500/5 border-l border-violet-500/50 shadow-[inset_1px_0_0_0_rgba(139,92,246,0.1)]'
-                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50'
+                  ? 'text-brand-accent-2 bg-brand-accent-2/10 border-l-4 border-brand-accent-2 shadow-sm'
+                  : 'text-ink-muted hover:text-ink-primary hover:bg-paper-hover'
               }`}
             >
-              <span className={`transition-colors duration-200 ${isActive ? 'text-violet-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
+              <span className={`transition-colors duration-140 ${isActive ? 'text-brand-accent-2' : 'text-ink-muted group-hover:text-ink-primary'}`}>
                 {item.icon}
               </span>
               {item.name}
@@ -110,16 +110,16 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+    <div className="flex min-h-screen bg-paper text-ink-primary font-sans">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 border-r border-zinc-900 bg-zinc-950">
+      <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 border-r border-rule bg-paper-elevated">
         {/* Brand */}
-        <div className="flex h-16 items-center px-6 border-b border-zinc-900/60">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent tracking-tight">
+        <div className="flex h-16 items-center px-6 border-b border-rule/60">
+          <Link href="/dashboard" className="flex items-center gap-2 group">
+            <span className="text-xl font-bold text-ink-primary tracking-tight font-sans">
               Sabi
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.6)]"></span>
+            <span className="h-2 w-2 rounded-full bg-brand-accent shadow-[0_0_10px_var(--brand-accent)] group-hover:scale-125 transition-transform duration-200"></span>
           </Link>
         </div>
 
@@ -127,21 +127,21 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
         {renderNavLinks()}
 
         {/* User profile card & Logout */}
-        <div className="p-4 border-t border-zinc-900/60 bg-zinc-900/10 backdrop-blur-sm">
+        <div className="p-4 border-t border-rule/60 bg-paper-elevated">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white font-bold text-sm shadow-[0_0_12px_rgba(139,92,246,0.2)]">
+            <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-brand-accent text-ink-primary font-bold text-sm shadow-[0_2px_8px_rgba(213,224,78,0.3)]">
               {userInitial}
             </div>
             <div className="flex-1 min-w-0">
               {isLoadingProfile ? (
                 <div className="space-y-2">
-                  <div className="h-3.5 bg-zinc-800 rounded animate-pulse w-3/4"></div>
-                  <div className="h-3 bg-zinc-900 rounded animate-pulse w-1/2"></div>
+                  <div className="h-3.5 bg-paper rounded animate-pulse w-3/4"></div>
+                  <div className="h-3 bg-paper rounded animate-pulse w-1/2"></div>
                 </div>
               ) : (
                 <>
-                  <h4 className="text-sm font-semibold text-zinc-200 truncate">{displayName}</h4>
-                  <p className="text-xs text-zinc-500 truncate">{universityText}</p>
+                  <h4 className="text-sm font-bold text-ink-primary truncate">{displayName}</h4>
+                  <p className="text-xs text-ink-muted truncate">{universityText}</p>
                 </>
               )}
             </div>
@@ -149,37 +149,37 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
 
           <button
             onClick={() => signOut()}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-400 bg-zinc-900/60 hover:bg-red-950/20 hover:text-red-400 border border-zinc-900 hover:border-red-900/30 rounded-xl transition-all duration-200"
+            className="btn btn--soft btn--ink w-full py-2.5 text-xs tracking-wider uppercase"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            Keluar Aplikasi
+            <span>Keluar Aplikasi</span>
           </button>
         </div>
       </aside>
 
       {/* Header - Mobile */}
       <div className="flex-1 flex flex-col md:pl-64">
-        <header className="md:hidden flex h-16 items-center justify-between px-4 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900/80 sticky top-0 z-40">
-          <Link href="/dashboard" className="flex items-center gap-1.5">
-            <span className="text-lg font-bold bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+        <header className="md:hidden flex h-16 items-center justify-between px-4 bg-paper-elevated border-b border-rule sticky top-0 z-40">
+          <Link href="/dashboard" className="flex items-center gap-1.5 group">
+            <span className="text-lg font-bold text-ink-primary">
               Sabi
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-accent group-hover:scale-125 transition-transform duration-200"></span>
           </Link>
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-zinc-400 hover:text-zinc-200 focus:outline-none"
+            className="p-2 text-ink-muted hover:text-ink-primary focus:outline-none"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -191,21 +191,21 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
           <div className="fixed inset-0 z-30 md:hidden">
             {/* Backdrop */}
             <div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 bg-ink-primary/20 backdrop-blur-sm"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             {/* Drawer Content */}
-            <div className="fixed inset-y-0 left-0 w-64 max-w-xs bg-zinc-950 border-r border-zinc-900 flex flex-col shadow-2xl animate-in slide-in-from-left duration-250">
-              <div className="flex h-16 items-center px-6 border-b border-zinc-900/60 justify-between">
-                <Link href="/dashboard" className="flex items-center gap-1.5" onClick={() => setIsMobileMenuOpen(false)}>
-                  <span className="text-lg font-bold bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+            <div className="fixed inset-y-0 left-0 w-64 max-w-xs bg-paper border-r border-rule flex flex-col shadow-2xl animate-in slide-in-from-left duration-250">
+              <div className="flex h-16 items-center px-6 border-b border-rule/60 justify-between bg-paper-elevated">
+                <Link href="/dashboard" className="flex items-center gap-1.5 group" onClick={() => setIsMobileMenuOpen(false)}>
+                  <span className="text-lg font-bold text-ink-primary">
                     Sabi
                   </span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-accent group-hover:scale-125 transition-transform duration-200"></span>
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-1 text-zinc-500 hover:text-zinc-300"
+                  className="p-1 text-ink-muted hover:text-ink-primary"
                 >
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -217,21 +217,21 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
               {renderNavLinks(() => setIsMobileMenuOpen(false))}
 
               {/* User profile info & Logout */}
-              <div className="p-4 border-t border-zinc-900 bg-zinc-900/10 backdrop-blur-sm">
+              <div className="p-4 border-t border-rule bg-paper-elevated">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white font-bold text-sm">
+                  <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-brand-accent text-ink-primary font-bold text-sm shadow-[0_2px_8px_rgba(213,224,78,0.3)]">
                     {userInitial}
                   </div>
                   <div className="flex-1 min-w-0">
                     {isLoadingProfile ? (
                       <div className="space-y-2">
-                        <div className="h-3.5 bg-zinc-800 rounded animate-pulse w-3/4"></div>
-                        <div className="h-3 bg-zinc-900 rounded animate-pulse w-1/2"></div>
+                        <div className="h-3.5 bg-paper rounded animate-pulse w-3/4"></div>
+                        <div className="h-3 bg-paper rounded animate-pulse w-1/2"></div>
                       </div>
                     ) : (
                       <>
-                        <h4 className="text-sm font-semibold text-zinc-200 truncate">{displayName}</h4>
-                        <p className="text-xs text-zinc-500 truncate">{universityText}</p>
+                        <h4 className="text-sm font-bold text-ink-primary truncate">{displayName}</h4>
+                        <p className="text-xs text-ink-muted truncate">{universityText}</p>
                       </>
                     )}
                   </div>
@@ -242,12 +242,12 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
                     setIsMobileMenuOpen(false)
                     signOut()
                   }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-400 bg-zinc-900/60 hover:bg-red-950/20 hover:text-red-400 border border-zinc-900 hover:border-red-900/30 rounded-xl transition-all"
+                  className="btn btn--soft btn--ink w-full py-2.5 text-xs tracking-wider uppercase"
                 >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                   </svg>
-                  Keluar Aplikasi
+                  <span>Keluar Aplikasi</span>
                 </button>
               </div>
             </div>
@@ -255,7 +255,7 @@ export function SidebarShell({ children }: { children: React.ReactNode }) {
         )}
 
         {/* Main Content Area */}
-        <main className="flex-1 min-h-[calc(100vh-4rem)] md:min-h-screen">
+        <main className="flex-1 min-h-[calc(100vh-4rem)] md:min-h-screen bg-paper text-ink-primary">
           {children}
         </main>
       </div>

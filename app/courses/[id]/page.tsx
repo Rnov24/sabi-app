@@ -184,10 +184,8 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
     groupedTopics[groupName].push(topic)
   })
 
-  const todayStr = new Date().toISOString().split('T')[0]
-
-  return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-10 text-ink-primary font-sans">
+  const todayStr = new Date().toISOString().split('T')[0]  return (
+    <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-10 text-ink-primary font-sans animate-fade-in">
       
       {/* Back to Dashboard Link */}
       <div>
@@ -209,11 +207,11 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
             {/* Meta Tags */}
             <div className="flex flex-wrap gap-2 items-center text-xs">
               {course.source_type === 'syllabus' ? (
-                <span className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-brand-accent/10 text-brand-accent border border-brand-accent/20">
+                <span className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-brand-accent-2/15 text-brand-accent-2-deep border border-brand-accent-2/30">
                   Mode Silabus
                 </span>
               ) : (
-                <span className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-brand-accent/20 text-brand-accent-deep border border-brand-accent/35">
                   Eksplorasi
                 </span>
               )}
@@ -225,8 +223,8 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
               )}
 
               {course.exam_date && (
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-paper-elevated text-ink-muted border border-rule">
-                  <svg className="h-3.5 w-3.5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-brand-accent-3/10 text-brand-accent-3-deep border border-brand-accent-3/20">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   Ujian: {new Date(course.exam_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -242,11 +240,11 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
             <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-mono text-ink-muted">
               <span><strong>{topics.length}</strong> Total Topik</span>
               <span>•</span>
-              <span className="text-emerald-400"><strong>{topics.filter(t => t.mastered).length}</strong> Dikuasai</span>
+              <span className="text-mint-deep font-bold"><strong>{topics.filter(t => t.mastered).length}</strong> Dikuasai</span>
               {topics.filter(t => t.mastered && t.next_review_date && t.next_review_date <= todayStr).length > 0 && (
                 <>
                   <span>•</span>
-                  <span className="text-amber-500 font-medium">
+                  <span className="text-brand-accent-3-deep font-bold">
                     <strong>{topics.filter(t => t.mastered && t.next_review_date && t.next_review_date <= todayStr).length}</strong> Perlu Review
                   </span>
                 </>
@@ -271,16 +269,16 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                     title="Copy Join Code"
                   >
                     {copied ? (
-                      <svg className="h-4.5 w-4.5 text-emerald-400 animate-in zoom-in-95 duration-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <svg className="h-4.5 w-4.5 text-mint-deep animate-in zoom-in-95 duration-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     ) : (
                       <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 01-2-2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                       </svg>
                     )}
                   </button>
-                  {copied && <span className="text-[10px] text-emerald-400 animate-pulse font-semibold">Tersalin!</span>}
+                  {copied && <span className="text-[10px] text-mint-deep animate-pulse font-semibold">Tersalin!</span>}
                 </div>
               </div>
             )}
@@ -288,7 +286,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
             {/* Class Feed Link (Peer Explanation Mode) */}
             <Link
               href={`/courses/${courseId}/feed`}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-brand-accent hover:bg-brand-accent-hover rounded-xl shadow-[0_2px_10px_rgba(139,92,246,0.15)] transition-all hover:translate-y-[-1px] focus-visible:outline-2 focus-visible:outline-brand-accent cursor-pointer"
+              className="btn btn--cyan w-full text-center flex items-center justify-center gap-2"
             >
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6m-6 4h3" />
@@ -301,11 +299,11 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
               <button
                 onClick={handleDeleteCourse}
                 disabled={isDeleting}
-                className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-ink-muted hover:text-red-400 bg-transparent hover:bg-red-950/20 border border-rule hover:border-red-900/30 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+                className="btn btn--soft btn--coral w-full flex items-center justify-center gap-1.5"
               >
                 {isDeleting ? (
                   <>
-                    <div className="h-3 w-3 animate-spin rounded-full border-2 border-ink-muted border-t-ink-primary"></div>
+                    <div className="h-3 w-3 animate-spin rounded-full border-2 border-brand-accent-3-deep border-t-white"></div>
                     <span>Menghapus...</span>
                   </>
                 ) : (
@@ -350,12 +348,12 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                       return (
                         <div
                           key={topic.id}
-                          className="group bg-paper-elevated/40 border border-rule/50 hover:border-rule-active rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-200"
+                          className="group bg-paper-elevated/40 border border-rule/50 hover:border-rule rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-200"
                         >
                           <div className="flex items-center gap-3">
                             {/* Simple checkmark icon */}
-                            <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center shrink-0">
-                              <svg className="h-3 w-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <div className="h-5 w-5 rounded-full bg-mint/15 border border-mint/25 flex items-center justify-center shrink-0">
+                              <svg className="h-3 w-3 text-mint-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                               </svg>
                             </div>
@@ -363,7 +361,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                               <h3 className="text-sm font-semibold text-ink-muted group-hover:text-ink-primary transition-colors">
                                 {topic.title}
                               </h3>
-                              <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-400/80">
+                              <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-mint-deep">
                                 Dikuasai
                               </span>
                             </div>
@@ -372,7 +370,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                             {topic.public_slug && (
                               <Link
                                 href={`/card/${topic.public_slug}`}
-                                className="text-[10px] font-mono font-bold uppercase tracking-wider text-ink-muted hover:text-brand-accent transition-colors flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-brand-accent"
+                                className="text-[10px] font-mono font-bold uppercase tracking-wider text-ink-muted hover:text-brand-accent-2-deep transition-colors flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-brand-accent"
                               >
                                 Lihat Mastery
                                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -382,7 +380,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                             )}
                             <Link
                               href={`/topics/${topic.id}/session`}
-                              className="text-[10px] font-mono font-bold uppercase tracking-wider text-ink-muted hover:text-brand-accent transition-colors border border-rule hover:border-brand-accent/30 rounded px-2.5 py-1 bg-paper-elevated/20 hover:bg-paper-hover focus-visible:outline-2 focus-visible:outline-brand-accent"
+                              className="text-[10px] font-mono font-bold uppercase tracking-wider text-ink-muted hover:text-brand-accent-2-deep transition-colors border border-rule hover:border-rule-active rounded px-2.5 py-1 bg-paper-elevated/20 hover:bg-paper-hover focus-visible:outline-2 focus-visible:outline-brand-accent"
                             >
                               Pelajari Lagi
                             </Link>
@@ -396,28 +394,28 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                       return (
                         <div
                           key={topic.id}
-                          className="bg-amber-500/5 border border-amber-500/40 hover:border-amber-500/80 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-200"
+                          className="bg-brand-accent-3/5 border border-brand-accent-3/30 hover:border-brand-accent-3/60 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-200"
                         >
                           <div className="space-y-2 flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                              <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-brand-accent-3/10 text-brand-accent-3-deep border border-brand-accent-3/20">
                                 Review Jatuh Tempo
                               </span>
-                              <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                              <span className="h-1.5 w-1.5 rounded-full bg-brand-accent-3 animate-pulse"></span>
                             </div>
                             <h3 className="text-base font-bold text-ink-primary leading-relaxed">
                               {topic.title}
                             </h3>
                             {topic.next_review_date && (
-                              <p className="text-xs text-amber-400/90 font-mono">
+                              <p className="text-xs text-brand-accent-3-deep font-mono">
                                 Jadwal review: <span className="font-bold underline decoration-dotted">Sekarang</span>
                               </p>
                             )}
                           </div>
-                          <div className="flex md:self-center w-full md:w-auto">
+                          <div className="flex md:self-center w-full md:w-auto shrink-0">
                             <Link
                               href={`/topics/${topic.id}/session`}
-                              className="w-full md:w-auto text-center px-5 py-2.5 text-xs font-bold uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-zinc-950 rounded-xl transition-all shadow-[0_2px_8px_rgba(245,158,11,0.15)] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-amber-500 cursor-pointer"
+                              className="btn btn--coral w-full md:w-auto"
                             >
                               Mulai Review
                             </Link>
@@ -428,9 +426,9 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
 
                     // Standard styling for Unlearned/In-progress topics
                     const difficultyBadgeColor = {
-                      basic: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-                      intermediate: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-                      advanced: 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                      basic: 'bg-mint/15 text-mint-deep border-mint/25',
+                      intermediate: 'bg-brand-accent/20 text-brand-accent-deep border-brand-accent/35',
+                      advanced: 'bg-brand-accent-3/15 text-brand-accent-3-deep border-brand-accent-3/25'
                     }[topic.difficulty]
 
                     const difficultyText = {
@@ -442,7 +440,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                     return (
                       <div
                         key={topic.id}
-                        className="bg-paper-elevated border border-rule hover:border-rule-active rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-200"
+                        className="card p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4"
                       >
                         <div className="space-y-2 flex-1">
                           <div className="flex items-center gap-2 flex-wrap">
@@ -457,10 +455,10 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                             {topic.title}
                           </h3>
                         </div>
-                        <div className="flex md:self-center w-full md:w-auto">
+                        <div className="flex md:self-center w-full md:w-auto shrink-0">
                           <Link
                             href={`/topics/${topic.id}/session`}
-                            className="w-full md:w-auto text-center px-5 py-2.5 text-xs font-bold uppercase tracking-wider bg-brand-accent hover:bg-brand-accent-hover text-white rounded-xl transition-all shadow-[0_2px_8px_rgba(139,92,246,0.15)] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-brand-accent cursor-pointer"
+                            className="btn btn--cyan w-full md:w-auto"
                           >
                             Mulai Belajar
                           </Link>

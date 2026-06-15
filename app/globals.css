@@ -1,24 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark Midnight Violet Base Colors */
-  --background: oklch(13% 0.01 270);
-  --foreground: oklch(96% 0.005 270);
+  /* Cream paper background and dark ink text */
+  --background: oklch(97% 0.012 95);
+  --foreground: oklch(20% 0.012 250);
 
-  /* Sabi Hallmark Dark Midnight Violet Tokens */
-  --paper: oklch(13% 0.01 270);
-  --paper-elevated: oklch(16% 0.012 270);
-  --paper-hover: oklch(19% 0.014 270);
+  /* Hum Theme Palettes */
+  --paper: oklch(97% 0.012 95);
+  --paper-elevated: oklch(94% 0.016 95);
+  --paper-hover: oklch(91% 0.020 95);
   
-  --rule: oklch(22% 0.01 270);
-  --rule-active: oklch(35% 0.012 270);
+  --rule: oklch(88% 0.015 95);
+  --rule-active: oklch(75% 0.020 95);
   
-  --ink-primary: oklch(96% 0.005 270);
-  --ink-muted: oklch(65% 0.008 270);
+  --ink-primary: oklch(20% 0.012 250);
+  --ink-muted: oklch(45% 0.010 250);
   
-  --brand-accent: oklch(70% 0.18 270);
-  --brand-accent-glow: oklch(70% 0.18 270 / 0.15);
-  --brand-accent-hover: oklch(75% 0.19 270);
+  /* Multiaxen colors */
+  --brand-accent: oklch(86% 0.18 95);        /* Pear-yellow (Primary) */
+  --brand-accent-deep: oklch(76% 0.20 95);   /* Pear-yellow deep edge */
+  
+  --brand-accent-2: oklch(66% 0.18 235);     /* Sky-cyan (Secondary) */
+  --brand-accent-2-deep: oklch(56% 0.20 235);/* Sky-cyan deep edge */
+  
+  --brand-accent-3: oklch(68% 0.24 18);      /* Coral-red (Pop) */
+  --brand-accent-3-deep: oklch(58% 0.26 18); /* Coral-red deep edge */
+
+  --color-mint: oklch(80% 0.16 150);
+  --color-mint-deep: oklch(70% 0.18 150);
+  
+  --color-lavender: oklch(74% 0.16 305);
+  --color-lavender-deep: oklch(64% 0.18 305);
+
+  --color-ink-deep: oklch(15% 0.012 250);
+
+  /* Radii */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --radius-input: 12px;
 }
 
 @theme inline {
@@ -34,14 +53,159 @@
   --color-rule-active: var(--rule-active);
   --color-ink-primary: var(--ink-primary);
   --color-ink-muted: var(--ink-muted);
+  
   --color-brand-accent: var(--brand-accent);
-  --color-brand-accent-glow: var(--brand-accent-glow);
-  --color-brand-accent-hover: var(--brand-accent-hover);
+  --color-brand-accent-deep: var(--brand-accent-deep);
+  --color-brand-accent-2: var(--brand-accent-2);
+  --color-brand-accent-2-deep: var(--brand-accent-2-deep);
+  --color-brand-accent-3: var(--brand-accent-3);
+  --color-brand-accent-3-deep: var(--brand-accent-3-deep);
+
+  --color-mint: var(--color-mint);
+  --color-mint-deep: var(--color-mint-deep);
+  --color-lavender: var(--color-lavender);
+  --color-lavender-deep: var(--color-lavender-deep);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "ss01" on, "cv11" on;
 }
+
+/* Hallmark Hum Button System */
+.btn {
+  --btn-face: var(--color-brand-accent);
+  --btn-ink: var(--color-ink-primary);
+  --btn-edge: var(--color-brand-accent-deep);
+  --btn-cast: oklch(86% 0.18 95 / 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.75rem 1.35rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--btn-ink);
+  background: var(--btn-face);
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+  box-shadow: 0 4px 0 0 var(--btn-edge), 0 6px 12px -3px var(--btn-cast);
+  transform: translateY(0);
+  transition: transform 140ms cubic-bezier(0.2,0.7,0.3,1), box-shadow 140ms cubic-bezier(0.2,0.7,0.3,1), background-color 160ms;
+}
+.btn:hover  {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 0 var(--btn-edge), 0 12px 22px -4px var(--btn-cast);
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 0 var(--btn-edge), 0 2px 6px -2px var(--btn-cast);
+  transition-duration: 70ms;
+}
+.btn:focus-visible {
+  outline: 3px solid color-mix(in oklch, var(--btn-edge) 70%, var(--color-brand-accent-2));
+  outline-offset: 3px;
+}
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: 0 4px 0 0 var(--btn-edge);
+}
+
+.btn--pear {
+  --btn-face: var(--color-brand-accent);
+  --btn-edge: var(--color-brand-accent-deep);
+  --btn-cast: oklch(86% 0.18 95 / 0.2);
+  --btn-ink: var(--color-ink-primary);
+}
+.btn--cyan {
+  --btn-face: var(--color-brand-accent-2);
+  --btn-edge: var(--color-brand-accent-2-deep);
+  --btn-cast: oklch(66% 0.18 235 / 0.2);
+  --btn-ink: oklch(98% 0.005 235);
+}
+.btn--coral {
+  --btn-face: var(--color-brand-accent-3);
+  --btn-edge: var(--color-brand-accent-3-deep);
+  --btn-cast: oklch(68% 0.24 18 / 0.2);
+  --btn-ink: oklch(98% 0.005 18);
+}
+.btn--mint {
+  --btn-face: var(--color-mint);
+  --btn-edge: var(--color-mint-deep);
+  --btn-cast: oklch(80% 0.16 150 / 0.2);
+  --btn-ink: var(--color-ink-primary);
+}
+.btn--ink {
+  --btn-face: var(--color-ink-primary);
+  --btn-edge: var(--color-ink-deep);
+  --btn-cast: oklch(20% 0.012 250 / 0.2);
+  --btn-ink: oklch(98% 0.005 250);
+}
+.btn--soft {
+  box-shadow: 0 4px 12px -4px var(--btn-cast);
+}
+.btn--soft:hover {
+  box-shadow: 0 8px 20px -4px var(--btn-cast);
+}
+.btn--soft:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px -2px var(--btn-cast);
+}
+
+/* Playful rounded cards that lift on hover */
+.card {
+  background: var(--color-paper-elevated);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 24px -12px oklch(20% 0.012 250 / 0.08);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color 220ms, box-shadow 220ms;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-rule-active);
+  box-shadow: 0 16px 36px -12px oklch(20% 0.012 250 / 0.14);
+}
+
+/* Highlight underline modifier */
+.hl {
+  color: inherit;
+  font-style: normal;
+  background-image: linear-gradient(var(--hl-color, oklch(86% 0.18 95 / 0.55)) 0 0);
+  background-repeat: no-repeat;
+  background-size: 100% 0.32em;
+  background-position: 0 82%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-bottom: 0.02em;
+}
+
+/* Input Fields styling */
+.form-input {
+  width: 100%;
+  background-color: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-input);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-ink-primary);
+  outline: none;
+  transition: border-color 160ms, box-shadow 160ms;
+}
+.form-input:focus {
+  border-color: var(--color-brand-accent-2);
+  box-shadow: 0 0 0 3px oklch(66% 0.18 235 / 0.15);
+}
+.form-input::placeholder {
+  color: var(--color-ink-muted);
+  opacity: 0.6;
+}
+
 

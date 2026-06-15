@@ -457,20 +457,20 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-6 md:p-10 text-zinc-100 max-w-7xl mx-auto space-y-8">
+    <div className="p-6 md:p-10 text-ink-primary max-w-7xl mx-auto space-y-8 animate-fade-in">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-50 via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-extrabold tracking-tight text-ink-primary">
             Dasbor Belajar
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Selamat datang kembali. Siap melatih pemahaman Anda hari ini?
           </p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl px-5 py-3 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 active:scale-[0.98] transition-all duration-200"
+          className="btn btn--pear flex items-center justify-center gap-2"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -480,7 +480,7 @@ export default function DashboardPage() {
       </div>
 
       {dashboardError && (
-        <div className="flex gap-3 items-start p-4 rounded-xl border border-red-950/60 bg-red-950/20 text-red-400 text-sm leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200">
+        <div className="flex gap-3 items-start p-4 rounded-xl border border-brand-accent-3/20 bg-brand-accent-3/5 text-brand-accent-3-deep text-sm leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200">
           <svg className="h-5 w-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
@@ -494,57 +494,57 @@ export default function DashboardPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {/* Mastery Count */}
-        <div className="bg-zinc-900/30 backdrop-blur-xl border border-zinc-900 rounded-2xl p-6 relative overflow-hidden group hover:border-zinc-800 transition-colors">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-emerald-500/10 transition-colors"></div>
+        <div className="card p-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-mint/5 rounded-full blur-2xl pointer-events-none group-hover:bg-mint/10 transition-colors"></div>
           <div className="flex justify-between items-start">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">Materi Dikuasai</span>
-            <div className="h-8 w-8 rounded-lg bg-emerald-950/30 border border-emerald-900/50 flex items-center justify-center text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-ink-muted">Materi Dikuasai</span>
+            <div className="h-8 w-8 rounded-lg bg-mint/15 border border-mint/20 flex items-center justify-center text-mint-deep">
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-4xl font-extrabold tracking-tight">{isLoading ? '—' : totalMasteries}</span>
-            <span className="text-xs text-zinc-500">topik</span>
+            <span className="text-4xl font-extrabold tracking-tight text-ink-primary">{isLoading ? '—' : totalMasteries}</span>
+            <span className="text-xs text-ink-muted">topik</span>
           </div>
         </div>
 
         {/* Due Reviews Count */}
-        <div className="bg-zinc-900/30 backdrop-blur-xl border border-zinc-900 rounded-2xl p-6 relative overflow-hidden group hover:border-zinc-800 transition-colors">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-amber-500/10 transition-colors"></div>
+        <div className="card p-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent-3/5 rounded-full blur-2xl pointer-events-none group-hover:bg-brand-accent-3/10 transition-colors"></div>
           <div className="flex justify-between items-start">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">Perlu Review</span>
-            <div className="h-8 w-8 rounded-lg bg-amber-950/30 border border-amber-900/50 flex items-center justify-center text-amber-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-ink-muted">Perlu Review</span>
+            <div className="h-8 w-8 rounded-lg bg-brand-accent-3/15 border border-brand-accent-3/20 flex items-center justify-center text-brand-accent-3-deep">
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-4xl font-extrabold tracking-tight text-amber-400">
+            <span className="text-4xl font-extrabold tracking-tight text-brand-accent-3-deep">
               {isLoading ? '—' : totalDueReviews}
             </span>
-            <span className="text-xs text-zinc-500">materi</span>
+            <span className="text-xs text-ink-muted">materi</span>
           </div>
         </div>
 
         {/* Countdown UTS/UAS */}
-        <div className="bg-zinc-900/30 backdrop-blur-xl border border-zinc-900 rounded-2xl p-6 relative overflow-hidden group hover:border-zinc-800 transition-colors">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-violet-500/10 transition-colors"></div>
+        <div className="card p-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent-2/5 rounded-full blur-2xl pointer-events-none group-hover:bg-brand-accent-2/10 transition-colors"></div>
           <div className="flex justify-between items-start">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">Ujian Terdekat</span>
-            <div className="h-8 w-8 rounded-lg bg-violet-950/30 border border-violet-900/50 flex items-center justify-center text-violet-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-ink-muted">Ujian Terdekat</span>
+            <div className="h-8 w-8 rounded-lg bg-brand-accent-2/15 border border-brand-accent-2/20 flex items-center justify-center text-brand-accent-2-deep">
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
           </div>
           <div className="mt-4 flex items-baseline gap-2">
-            <span className={`text-4xl font-extrabold tracking-tight ${examDaysRemaining !== null && examDaysRemaining <= 7 ? 'text-rose-500' : ''}`}>
+            <span className={`text-4xl font-extrabold tracking-tight ${examDaysRemaining !== null && examDaysRemaining <= 7 ? 'text-brand-accent-3-deep' : 'text-brand-accent-2-deep'}`}>
               {isLoading ? '—' : (examDaysRemaining ?? '—')}
             </span>
-            <span className="text-xs text-zinc-500">
+            <span className="text-xs text-ink-muted">
               {examDaysRemaining !== null ? 'hari lagi' : 'belum dijadwalkan'}
             </span>
           </div>
@@ -556,29 +556,29 @@ export default function DashboardPage() {
         // Loading Skeleton Grid
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="bg-zinc-900/10 border border-zinc-900 rounded-2xl h-56 p-6 space-y-6">
+            <div key={n} className="bg-paper-elevated border border-rule rounded-2xl h-56 p-6 space-y-6">
               <div className="space-y-3">
-                <div className="h-6 bg-zinc-800 rounded w-3/4"></div>
-                <div className="h-4 bg-zinc-900 rounded w-1/4"></div>
+                <div className="h-6 bg-paper-hover rounded w-3/4"></div>
+                <div className="h-4 bg-paper-hover rounded w-1/4"></div>
               </div>
               <div className="space-y-2 pt-4">
-                <div className="h-3 bg-zinc-900 rounded w-full"></div>
-                <div className="h-2 bg-zinc-800 rounded w-1/3"></div>
+                <div className="h-3 bg-paper-hover rounded w-full"></div>
+                <div className="h-2 bg-paper-hover rounded w-1/3"></div>
               </div>
             </div>
           ))}
         </div>
       ) : courses.length === 0 ? (
         // Onboarding Empty State
-        <div className="bg-zinc-900/10 border border-zinc-900/80 rounded-3xl p-12 text-center max-w-2xl mx-auto flex flex-col items-center gap-6 mt-8">
-          <div className="h-16 w-16 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/15 border border-violet-500/20">
-            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="bg-paper-elevated border border-rule rounded-3xl p-12 text-center max-w-2xl mx-auto flex flex-col items-center gap-6 mt-8 shadow-sm">
+          <div className="h-16 w-16 rounded-2xl bg-brand-accent-2/15 text-brand-accent-2-deep border border-brand-accent-2/30 flex items-center justify-center">
+            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
           <div className="space-y-2 max-w-md">
-            <h3 className="text-xl font-bold">Mulai Perjalanan Belajarmu</h3>
-            <p className="text-zinc-500 text-sm leading-relaxed">
+            <h3 className="text-xl font-bold text-ink-primary">Mulai Perjalanan Belajarmu</h3>
+            <p className="text-ink-muted text-sm leading-relaxed">
               Sabi membantu kamu memahami konsep kompleks mata kuliah menggunakan pendekatan Feynman Technique — didampingi tutor AI yang menggunakan dialog Socratic.
             </p>
           </div>
@@ -588,7 +588,7 @@ export default function DashboardPage() {
                 setActiveTab('syllabus')
                 setIsModalOpen(true)
               }}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold bg-violet-600 hover:bg-violet-500 text-white rounded-xl shadow-md transition-all active:scale-[0.98]"
+              className="btn btn--cyan flex items-center justify-center gap-2"
             >
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -600,7 +600,7 @@ export default function DashboardPage() {
                 setActiveTab('exploration')
                 setIsModalOpen(true)
               }}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800/80 rounded-xl transition-all"
+              className="btn btn--soft btn--pear flex items-center justify-center gap-2"
             >
               <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -621,48 +621,48 @@ export default function DashboardPage() {
               <Link
                 key={course.id}
                 href={`/courses/${course.id}`}
-                className="bg-zinc-900/20 hover:bg-zinc-900/40 border border-zinc-900 hover:border-zinc-800 rounded-2xl p-6 flex flex-col justify-between h-60 shadow-lg shadow-zinc-950/2 bg-gradient-to-b from-transparent to-zinc-950/30 group transition-all duration-300 active:scale-[0.99]"
+                className="card p-6 flex flex-col justify-between h-60 text-ink-primary group"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-3">
                     {course.source_type === 'syllabus' ? (
-                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-violet-500/10 text-violet-400 border border-violet-500/25">
+                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-brand-accent-2/15 text-brand-accent-2-deep border border-brand-accent-2/30">
                         Mode Silabus
                       </span>
                     ) : (
-                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-brand-accent/20 text-brand-accent-deep border border-brand-accent/35">
                         Eksplorasi
                       </span>
                     )}
 
                     {course.level && (
-                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-400 border border-zinc-700/50">
+                      <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-paper border border-rule text-ink-muted">
                         {course.level === 'intro' ? 'Intro' : course.level === 'intermediate' ? 'Menengah' : 'Lanjut'}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-lg font-bold text-zinc-100 group-hover:text-violet-400 transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold text-ink-primary group-hover:text-brand-accent-2-deep transition-colors line-clamp-2">
                     {course.name}
                   </h3>
                 </div>
 
-                <div className="space-y-4 pt-4 border-t border-zinc-900/60">
+                <div className="space-y-4 pt-4 border-t border-rule">
                   {/* Progress bar */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-semibold text-zinc-400">
+                    <div className="flex justify-between text-xs font-semibold text-ink-muted">
                       <span>Progres Pemahaman</span>
-                      <span className="text-zinc-200">{progress}%</span>
+                      <span className="text-ink-primary font-bold">{progress}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-zinc-950 rounded-full overflow-hidden border border-zinc-900/40">
+                    <div className="h-1.5 w-full bg-paper rounded-full overflow-hidden border border-rule">
                       <div
-                        className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-500"
+                        className="h-full bg-brand-accent-2 rounded-full transition-all duration-500"
                         style={{ width: `${progress}%` }}
                       ></div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-zinc-500">
+                  <div className="flex items-center justify-between text-xs text-ink-muted">
                     <div className="flex gap-3">
                       <span><strong>{course.topic_count}</strong> Topik</span>
                       <span>•</span>
@@ -670,7 +670,7 @@ export default function DashboardPage() {
                     </div>
                     
                     {course.exam_date && (
-                      <span className="flex items-center gap-1 text-[11px] font-medium text-zinc-400">
+                      <span className="flex items-center gap-1 text-[11px] font-medium text-brand-accent-3-deep bg-brand-accent-3/10 px-2 py-0.5 rounded border border-brand-accent-3/20">
                         <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -687,18 +687,18 @@ export default function DashboardPage() {
 
       {/* Onboarding Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-250 flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-primary/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-2xl bg-paper border border-rule rounded-[var(--radius-card)] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-250 flex flex-col max-h-[90vh] text-ink-primary">
             
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-900">
-              <h2 className="text-lg font-bold bg-gradient-to-r from-zinc-50 to-zinc-400 bg-clip-text text-transparent">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-rule bg-paper-elevated">
+              <h2 className="text-lg font-bold text-ink-primary">
                 Tambah Pembelajaran Baru
               </h2>
               <button
                 onClick={closeModal}
                 disabled={syllabusSubmitting || explorationSaving || joinSubmitting}
-                className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors disabled:opacity-50"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink-primary hover:bg-paper-hover transition-colors disabled:opacity-50"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -707,7 +707,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Tabs */}
-            <div className="flex border-b border-zinc-800 bg-zinc-950/40">
+            <div className="flex border-b border-rule bg-paper-elevated">
               {(['syllabus', 'exploration', 'join'] as const).map((tab) => (
                 <button
                   key={tab}
@@ -715,8 +715,8 @@ export default function DashboardPage() {
                   disabled={syllabusSubmitting || explorationSaving || joinSubmitting}
                   className={`flex-1 py-3.5 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
                     activeTab === tab
-                      ? 'text-violet-400 border-violet-500 bg-zinc-900/10'
-                      : 'text-zinc-500 border-transparent hover:text-zinc-300 hover:bg-zinc-900/5'
+                      ? 'text-brand-accent-2-deep border-brand-accent-2 bg-paper/50 font-bold'
+                      : 'text-ink-muted border-transparent hover:text-ink-primary hover:bg-paper-hover'
                   } disabled:opacity-50`}
                 >
                   {tab === 'syllabus' ? 'Mode Silabus' : tab === 'exploration' ? 'Mode Eksplorasi' : 'Join Kelas'}
@@ -725,13 +725,13 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Body - Scrollable */}
-            <div className="p-6 overflow-y-auto flex-1">
+            <div className="p-6 overflow-y-auto flex-1 bg-paper">
               
               {/* Tab 1: Mode Silabus Form */}
               {activeTab === 'syllabus' && (
                 <form onSubmit={handleSyllabusSubmit} className="space-y-6">
                   {syllabusError && (
-                    <div className="flex gap-2.5 items-start bg-red-950/20 border border-red-950 text-red-400 p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
+                    <div className="flex gap-2.5 items-start bg-brand-accent-3/10 border border-brand-accent-3/20 text-brand-accent-3-deep p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
                       <svg className="h-4 w-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
@@ -742,7 +742,7 @@ export default function DashboardPage() {
                   {!syllabusSubmitting ? (
                     <div className="space-y-5">
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
                           Nama Mata Kuliah *
                         </label>
                         <input
@@ -751,19 +751,19 @@ export default function DashboardPage() {
                           placeholder="Contoh: Algoritma & Struktur Data"
                           value={syllabusName}
                           onChange={(e) => setSyllabusName(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200"
+                          className="form-input"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                          <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
                             Level Kuliah
                           </label>
                           <select
                             value={syllabusLevel}
                             onChange={(e: any) => setSyllabusLevel(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200"
+                            className="form-input"
                           >
                             <option value="intro">Pengenalan (Intro)</option>
                             <option value="intermediate">Menengah (Intermediate)</option>
@@ -772,37 +772,37 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                          <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
                             Tanggal Ujian Terdekat
                           </label>
                           <input
                             type="date"
                             value={syllabusExamDate}
                             onChange={(e) => setSyllabusExamDate(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200"
+                            className="form-input"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
                           Dokumen Silabus (PDF) *
                         </label>
-                        <div className="border border-dashed border-zinc-800 hover:border-zinc-700 bg-zinc-950/40 rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all relative">
+                        <div className="border border-dashed border-rule hover:border-rule-active bg-paper-elevated rounded-xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all relative">
                           <input
                             type="file"
                             accept=".pdf"
                             onChange={handleFileChange}
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                           />
-                          <svg className="h-8 w-8 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <svg className="h-8 w-8 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
                           <div className="text-center">
-                            <p className="text-sm font-semibold text-zinc-300">
+                            <p className="text-sm font-semibold text-ink-primary">
                               {syllabusFile ? syllabusFile.name : 'Pilih file PDF silabus'}
                             </p>
-                            <p className="text-xs text-zinc-500 mt-1">
+                            <p className="text-xs text-ink-muted mt-1">
                               {syllabusFile 
                                 ? `${(syllabusFile.size / (1024 * 1024)).toFixed(2)} MB` 
                                 : 'PDF saja, ukuran maksimal 10MB'}
@@ -814,7 +814,7 @@ export default function DashboardPage() {
                       <div className="pt-2 flex justify-end">
                         <button
                           type="submit"
-                          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl px-6 py-3 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 transition-all"
+                          className="btn btn--cyan w-full sm:w-auto"
                         >
                           Mulai Analisis
                         </button>
@@ -824,8 +824,8 @@ export default function DashboardPage() {
                     // AI Parsing Loading State
                     <div className="flex flex-col items-center justify-center py-10 space-y-6 text-center animate-in fade-in duration-300">
                       <div className="relative h-20 w-20 flex items-center justify-center">
-                        <div className="absolute inset-0 rounded-full border-4 border-zinc-800 border-t-violet-500 animate-spin"></div>
-                        <div className="h-10 w-10 rounded-full bg-violet-950/20 border border-violet-500/30 animate-pulse flex items-center justify-center text-violet-400">
+                        <div className="absolute inset-0 rounded-full border-4 border-paper-hover border-t-brand-accent-2 animate-spin"></div>
+                        <div className="h-10 w-10 rounded-full bg-brand-accent-2/15 border border-brand-accent-2/30 animate-pulse flex items-center justify-center text-brand-accent-2-deep">
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                           </svg>
@@ -833,21 +833,21 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="space-y-2 max-w-md">
-                        <h4 className="text-base font-bold text-zinc-200">AI Sedang Bekerja...</h4>
-                        <p className="text-sm text-zinc-500 leading-relaxed min-h-[40px] animate-pulse">
+                        <h4 className="text-base font-bold text-ink-primary">AI Sedang Bekerja...</h4>
+                        <p className="text-sm text-ink-muted leading-relaxed min-h-[40px] animate-pulse">
                           {syllabusStage}
                         </p>
                       </div>
 
                       {/* Detailed Progress Bar */}
                       <div className="w-full max-w-sm space-y-1.5">
-                        <div className="h-2 w-full bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
+                        <div className="h-2 w-full bg-paper-elevated rounded-full overflow-hidden border border-rule">
                           <div
-                            className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full transition-all duration-300"
+                            className="h-full bg-brand-accent-2 rounded-full transition-all duration-300"
                             style={{ width: `${syllabusProgress}%` }}
                           ></div>
                         </div>
-                        <span className="text-xs font-semibold text-zinc-500">{syllabusProgress}%</span>
+                        <span className="text-xs font-semibold text-ink-muted">{syllabusProgress}%</span>
                       </div>
                     </div>
                   )}
@@ -858,7 +858,7 @@ export default function DashboardPage() {
               {activeTab === 'exploration' && (
                 <div className="space-y-6">
                   {explorationError && (
-                    <div className="flex gap-2.5 items-start bg-red-950/20 border border-red-950 text-red-400 p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
+                    <div className="flex gap-2.5 items-start bg-brand-accent-3/10 border border-brand-accent-3/20 text-brand-accent-3-deep p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
                       <svg className="h-4 w-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
@@ -870,7 +870,7 @@ export default function DashboardPage() {
                     // Topic string request input
                     <form onSubmit={handleExplorationDecompose} className="space-y-4">
                       <div className="space-y-2">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted">
                           Topik apa yang ingin kamu kuasai?
                         </label>
                         <input
@@ -880,7 +880,7 @@ export default function DashboardPage() {
                           placeholder="Contoh: Cara Kerja DNS, Stoikisme, Teori Relativitas Khusus"
                           value={explorationTopic}
                           onChange={(e) => setExplorationTopic(e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200"
+                          className="form-input"
                         />
                       </div>
 
@@ -888,7 +888,7 @@ export default function DashboardPage() {
                         <button
                           type="submit"
                           disabled={isDecomposing}
-                          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl px-6 py-3 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 transition-all disabled:opacity-50"
+                          className="btn btn--cyan w-full sm:w-auto"
                         >
                           {isDecomposing ? (
                             <>
@@ -905,25 +905,25 @@ export default function DashboardPage() {
                     // Generated chips editor
                     <div className="space-y-6">
                       <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-zinc-300">Hasil Dekomposisi AI</h4>
-                        <p className="text-xs text-zinc-500 leading-relaxed">
+                        <h4 className="text-sm font-bold text-ink-primary">Hasil Dekomposisi AI</h4>
+                        <p className="text-xs text-ink-muted leading-relaxed">
                           AI membagi topik menjadi subtopik di bawah. Klik chip untuk mengubah judul, klik badge kesulitan untuk siklus kesulitan (Basic/Intermediate/Advanced), klik &quot;x&quot; untuk menghapus, atau tambah subtopik kustom Anda sendiri.
                         </p>
                       </div>
 
                       {/* Chips list */}
-                      <div className="flex flex-wrap gap-2.5 p-4 bg-zinc-950/40 border border-zinc-800/80 rounded-xl min-h-[100px]">
+                      <div className="flex flex-wrap gap-2.5 p-4 bg-paper-elevated border border-rule rounded-xl min-h-[100px]">
                         {subtopics.map((sub, idx) => {
                           const diffColors = {
-                            basic: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/15',
-                            intermediate: 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/15',
-                            advanced: 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/15',
+                            basic: 'bg-mint/15 text-mint-deep border-mint/25 hover:bg-mint/20',
+                            intermediate: 'bg-brand-accent/20 text-brand-accent-deep border-brand-accent/35 hover:bg-brand-accent/25',
+                            advanced: 'bg-brand-accent-3/15 text-brand-accent-3-deep border-brand-accent-3/25 hover:bg-brand-accent-3/20',
                           }[sub.difficulty]
 
                           return (
                             <div
                               key={idx}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border bg-zinc-900 border-zinc-800 text-xs font-medium transition-all group"
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border bg-paper border-rule text-xs font-medium transition-all group"
                             >
                               {sub.isEditing ? (
                                 <input
@@ -935,12 +935,12 @@ export default function DashboardPage() {
                                     if (e.key === 'Enter') toggleEditSubtopic(idx, false)
                                   }}
                                   autoFocus
-                                  className="bg-zinc-800 border border-zinc-700 text-zinc-100 px-2 py-0.5 rounded text-xs focus:outline-none w-36"
+                                  className="bg-paper-elevated border border-rule-active text-ink-primary px-2 py-0.5 rounded text-xs focus:outline-none w-36"
                                 />
                               ) : (
                                 <span
                                   onClick={() => toggleEditSubtopic(idx, true)}
-                                  className="cursor-text text-zinc-300 hover:text-zinc-100 transition-colors"
+                                  className="cursor-text text-ink-primary hover:text-brand-accent-2-deep transition-colors"
                                 >
                                   {sub.title}
                                 </span>
@@ -959,7 +959,7 @@ export default function DashboardPage() {
                               <button
                                 type="button"
                                 onClick={() => deleteSubtopic(idx)}
-                                className="text-zinc-500 hover:text-rose-400 transition-colors"
+                                className="text-ink-muted hover:text-brand-accent-3-deep transition-colors"
                               >
                                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -971,9 +971,9 @@ export default function DashboardPage() {
                       </div>
 
                       {/* Add Custom Subtopic Form */}
-                      <form onSubmit={addCustomSubtopic} className="flex flex-col sm:flex-row items-end sm:items-center gap-3 bg-zinc-900/50 p-4 border border-zinc-900 rounded-xl">
+                      <form onSubmit={addCustomSubtopic} className="flex flex-col sm:flex-row items-end sm:items-center gap-3 bg-paper-elevated p-4 border border-rule rounded-xl">
                         <div className="flex-1 w-full space-y-1">
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
                             Tambah Subtopik Baru
                           </label>
                           <input
@@ -981,18 +981,18 @@ export default function DashboardPage() {
                             placeholder="Contoh: Protokol DNS over HTTPS"
                             value={newSubtopicTitle}
                             onChange={(e) => setNewSubtopicTitle(e.target.value)}
-                            className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 placeholder-zinc-700 focus:outline-none"
+                            className="form-input text-xs py-2 px-3"
                           />
                         </div>
 
                         <div className="w-full sm:w-auto space-y-1">
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-ink-muted">
                             Kesulitan
                           </label>
                           <select
                             value={newSubtopicDifficulty}
                             onChange={(e: any) => setNewSubtopicDifficulty(e.target.value)}
-                            className="w-full sm:w-32 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none"
+                            className="form-input text-xs py-2 px-3 sm:w-32"
                           >
                             <option value="basic">Basic</option>
                             <option value="intermediate">Intermediate</option>
@@ -1002,11 +1002,8 @@ export default function DashboardPage() {
 
                         <button
                           type="submit"
-                          className="w-full sm:w-auto flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 px-4 py-2 rounded-lg text-xs font-bold transition-all active:scale-[0.98]"
+                          className="btn btn--pear py-2 px-4 text-xs font-bold shrink-0"
                         >
-                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                          </svg>
                           Tambah
                         </button>
                       </form>
@@ -1019,7 +1016,7 @@ export default function DashboardPage() {
                             setSubtopics([])
                             setExplorationTopic('')
                           }}
-                          className="text-xs font-semibold text-zinc-500 hover:text-zinc-300 transition-colors inline-flex items-center gap-1.5"
+                          className="text-xs font-semibold text-ink-muted hover:text-ink-primary transition-colors inline-flex items-center gap-1.5"
                         >
                           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -1031,7 +1028,7 @@ export default function DashboardPage() {
                           type="button"
                           onClick={handleExplorationSave}
                           disabled={explorationSaving || subtopics.length === 0}
-                          className="flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl px-6 py-3 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 transition-all disabled:opacity-50"
+                          className="btn btn--cyan"
                         >
                           {explorationSaving ? (
                             <>
@@ -1052,7 +1049,7 @@ export default function DashboardPage() {
               {activeTab === 'join' && (
                 <form onSubmit={handleJoinClassSubmit} className="space-y-6">
                   {joinError && (
-                    <div className="flex gap-2.5 items-start bg-red-950/20 border border-red-950 text-red-400 p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
+                    <div className="flex gap-2.5 items-start bg-brand-accent-3/10 border border-brand-accent-3/20 text-brand-accent-3-deep p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in duration-200">
                       <svg className="h-4 w-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
@@ -1062,7 +1059,7 @@ export default function DashboardPage() {
 
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-ink-muted text-center">
                         Kode Gabung Kelas (Join Code)
                       </label>
                       <input
@@ -1073,9 +1070,9 @@ export default function DashboardPage() {
                         value={joinCode}
                         onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                         maxLength={15}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 tracking-widest text-center uppercase font-bold focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200"
+                        className="form-input text-center tracking-widest uppercase font-bold text-lg"
                       />
-                      <p className="text-[11px] text-zinc-500 text-center leading-relaxed mt-1">
+                      <p className="text-[11px] text-ink-muted text-center leading-relaxed mt-1">
                         Dapatkan kode kelas 6-karakter dari teman sekelas Anda yang membuat kelas menggunakan Mode Silabus untuk belajar bersama.
                       </p>
                     </div>
@@ -1084,7 +1081,7 @@ export default function DashboardPage() {
                       <button
                         type="submit"
                         disabled={joinSubmitting}
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl px-6 py-3 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20 transition-all disabled:opacity-50"
+                        className="btn btn--cyan w-full sm:w-auto"
                       >
                         {joinSubmitting ? (
                           <>
