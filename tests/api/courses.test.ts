@@ -56,8 +56,12 @@ describe('Courses API Endpoints', () => {
           level: 'intro',
           join_code: 'CAL123',
           created_at: '2026-06-01T00:00:00Z',
-          topics: [{ count: 4 }],
-          mastery_events: [{ count: 2 }],
+          topics: [
+            { id: 't-1', mastery_events: [{ id: 'me-1' }, { id: 'me-2' }] },
+            { id: 't-2', mastery_events: [] },
+            { id: 't-3', mastery_events: [] },
+            { id: 't-4', mastery_events: [] },
+          ],
         },
       ]
       ;(supabase as any).mockTable('courses', mockDbCourses)

@@ -23,8 +23,10 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
     .from('courses')
     .select(`
       id, name, source_type, exam_date, level, join_code, created_at,
-      topics(count),
-      mastery_events(count)
+      topics(
+        id,
+        mastery_events(id)
+      )
     `)
     .eq('user_id', user.id)
     .is('deleted_at', null)
@@ -38,13 +40,27 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
 
   if (error) throw error
 
-  const courses = (data || []).map((c: any) => ({
-    ...c,
-    topic_count: c.topics?.[0]?.count ?? 0,
-    mastery_count: c.mastery_events?.[0]?.count ?? 0,
-    topics: undefined,
-    mastery_events: undefined,
-  }))
+  const courses = (data || []).map((c: any) => {
+    const topics = c.topics || []
+    const topic_count = topics.length
+    let mastery_count = 0
+    for (const topic of topics) {
+      if (topic.mastery_events) {
+        mastery_count += topic.mastery_events.length
+      }
+    }
+    return {
+      id: c.id,
+      name: c.name,
+      source_type: c.source_type,
+      exam_date: c.exam_date,
+      level: c.level,
+      join_code: c.join_code,
+      created_at: c.created_at,
+      topic_count,
+      mastery_count,
+    }
+  })
 
   return ok(courses)
 })
