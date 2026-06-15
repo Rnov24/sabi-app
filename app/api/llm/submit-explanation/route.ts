@@ -97,8 +97,20 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     })
     const jsonStr = extractJSON(rawResponse)
     parsed = submitExplanationOutputSchema.parse(JSON.parse(jsonStr))
-  } catch {
-    throw new LLMError('Failed to evaluate explanation')
+  } catch (err) {
+    console.warn('First submit-explanation attempt failed. Retrying...', err)
+    try {
+      const rawResponse = await callGemini(prompt, {
+        temperature: 0.4,
+        userId: user.id,
+        route: 'submit-explanation',
+      })
+      const jsonStr = extractJSON(rawResponse)
+      parsed = submitExplanationOutputSchema.parse(JSON.parse(jsonStr))
+    } catch (retryErr) {
+      console.error('Failed to evaluate explanation after retry:', retryErr)
+      throw new LLMError('Failed to evaluate explanation')
+    }
   }
 
   // Enforce: no mastery before round 2

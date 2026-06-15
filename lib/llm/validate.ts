@@ -27,7 +27,7 @@ export type DecomposeTopicOutput = z.infer<typeof decomposeTopicOutputSchema>
 
 // start-session output
 export const startSessionOutputSchema = z.object({
-  learning_goal: z.string().max(200),
+  learning_goal: z.string().max(500),
   socratic_question: z.string(),
 })
 

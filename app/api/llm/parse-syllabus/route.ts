@@ -65,6 +65,7 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     const jsonStr = extractJSON(rawResponse)
     parsed = parseSyllabusOutputSchema.parse(JSON.parse(jsonStr))
   } catch (parseError) {
+    console.warn('First parse-syllabus attempt failed. Retrying...', parseError)
     if (retried) throw new LLMError('Failed to parse syllabus output')
     retried = true
     // Retry once
@@ -75,7 +76,8 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
       })
       const jsonStr = extractJSON(rawResponse)
       parsed = parseSyllabusOutputSchema.parse(JSON.parse(jsonStr))
-    } catch {
+    } catch (retryErr) {
+      console.error('Failed to parse syllabus after retry:', retryErr)
       throw new LLMError('Failed to parse syllabus after retry')
     }
   }

@@ -58,8 +58,20 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     })
     const jsonStr = extractJSON(rawResponse)
     parsed = startSessionOutputSchema.parse(JSON.parse(jsonStr))
-  } catch {
-    throw new LLMError('Failed to start session')
+  } catch (err) {
+    console.warn('First start-session attempt failed. Retrying...', err)
+    try {
+      const rawResponse = await callGemini(prompt, {
+        temperature: 0.5,
+        userId: user.id,
+        route: 'start-session',
+      })
+      const jsonStr = extractJSON(rawResponse)
+      parsed = startSessionOutputSchema.parse(JSON.parse(jsonStr))
+    } catch (retryErr) {
+      console.error('Failed to start session after retry:', retryErr)
+      throw new LLMError('Failed to start session')
+    }
   }
 
   // Return to client — nothing saved to DB (stateless)
