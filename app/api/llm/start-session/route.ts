@@ -24,13 +24,14 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
 
   const supabase = await createClient()
 
-  // Fetch topic + course context; verify ownership
+  // Fetch topic + course context; verify ownership or membership
   const { data: topic, error } = await supabase
     .from('topics')
     .select(`
       title,
       difficulty,
       courses!inner (
+        id,
         user_id,
         level
       )
@@ -39,7 +40,20 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     .single()
 
   if (error || !topic) throw new NotFoundError('Topic')
-  if ((topic as any).courses?.user_id !== user.id) throw new NotFoundError('Topic')
+  
+  const course = (topic as any).courses
+  if (course?.user_id !== user.id) {
+    const { data: member, error: memberError } = await supabase
+      .from('course_members')
+      .select('role')
+      .eq('course_id', course?.id)
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    if (memberError || !member) {
+      throw new NotFoundError('Topic')
+    }
+  }
 
   const courseLevel = (topic as any).courses?.level || topic.difficulty || null
 

@@ -36,12 +36,13 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
 
   const supabase = await createClient()
 
-  // Verify topic ownership
+  // Verify topic ownership or membership
   const { data: topic, error: topicError } = await supabase
     .from('topics')
     .select(`
       title,
       courses!inner (
+        id,
         user_id
       )
     `)
@@ -49,7 +50,20 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
     .single()
 
   if (topicError || !topic) throw new NotFoundError('Topic')
-  if ((topic as any).courses?.user_id !== user.id) throw new NotFoundError('Topic')
+
+  const course = (topic as any).courses
+  if (course?.user_id !== user.id) {
+    const { data: member, error: memberError } = await supabase
+      .from('course_members')
+      .select('role')
+      .eq('course_id', course?.id)
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    if (memberError || !member) {
+      throw new NotFoundError('Topic')
+    }
+  }
 
   // Generate mastery card text via LLM
   const prompt = buildGenerateMasteryCardPrompt(
