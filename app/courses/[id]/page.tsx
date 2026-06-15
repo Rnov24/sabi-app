@@ -183,8 +183,9 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
     }
     groupedTopics[groupName].push(topic)
   })
+  const todayStr = new Date().toISOString().split('T')[0]
 
-  const todayStr = new Date().toISOString().split('T')[0]  return (
+  return (
     <div className="p-6 md:p-10 max-w-5xl mx-auto space-y-10 text-ink-primary font-sans animate-fade-in">
       
       {/* Back to Dashboard Link */}
