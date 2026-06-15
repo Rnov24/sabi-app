@@ -1,38 +1,63 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSignUp, setIsSignUp] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+    if (!email || !password) return
 
     setIsLoading(true)
     setErrorMsg(null)
 
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
-      })
+      
+      if (isSignUp) {
+        // Sign up mode
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
+        })
 
-      if (error) {
-        throw error
+        if (error) throw error
+
+        // If auto-logged in (Confirm email is disabled)
+        if (data.session) {
+          router.push('/dashboard')
+          router.refresh()
+        } else {
+          setIsSuccess(true) // Show verify email screen
+        }
+      } else {
+        // Sign in mode
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        })
+
+        if (error) throw error
+
+        // Redirect to dashboard
+        router.push('/dashboard')
+        router.refresh()
       }
-
-      setIsSuccess(true)
     } catch (err: any) {
-      console.error('Login error:', err)
-      setErrorMsg(err.message || 'Gagal mengirim link masuk. Silakan coba lagi.')
+      console.error('Auth error:', err)
+      setErrorMsg(err.message || 'Gagal memproses autentikasi. Silakan coba lagi.')
     } finally {
       setIsLoading(false)
     }
@@ -54,7 +79,7 @@ export default function LoginPage() {
             <span className="text-xl font-black text-white tracking-widest">S</span>
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-200 to-zinc-200 bg-clip-text text-transparent">
-            Masuk ke Sabi
+            {isSignUp ? 'Daftar Akun Sabi' : 'Masuk ke Sabi'}
           </h1>
           <p className="text-sm text-zinc-500 mt-1">Asisten Belajar Mandiri Berbasis AI</p>
         </div>
@@ -62,13 +87,7 @@ export default function LoginPage() {
         {/* Card */}
         <div className="bg-zinc-900/30 backdrop-blur-xl border border-zinc-800/80 rounded-2xl p-8 shadow-2xl shadow-violet-950/5">
           {!isSuccess ? (
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div className="space-y-2">
-                <p className="text-sm text-zinc-400 leading-relaxed">
-                  Masukkan email Anda di bawah. Kami akan mengirimkan tautan masuk (magic link) secara instan ke kotak masuk Anda.
-                </p>
-              </div>
-
+            <form onSubmit={handleAuth} className="space-y-6">
               {errorMsg && (
                 <div className="flex gap-2.5 items-start bg-red-950/20 border border-red-900/30 text-red-400 p-3.5 rounded-xl text-xs leading-relaxed animate-in fade-in slide-in-from-top-1 duration-200">
                   <svg className="h-4 w-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -94,6 +113,22 @@ export default function LoginPage() {
                 />
               </div>
 
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  className="w-full bg-zinc-950/80 border border-zinc-800/80 rounded-xl px-4 py-3 text-zinc-100 placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -102,17 +137,27 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white"></div>
-                    <span>Mengirim Tautan...</span>
+                    <span>Memproses...</span>
                   </>
                 ) : (
                   <>
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <span>Kirim Link Masuk</span>
+                    <span>{isSignUp ? 'Daftar' : 'Masuk'}</span>
                   </>
                 )}
               </button>
+
+              <div className="text-center pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp)
+                    setErrorMsg(null)
+                  }}
+                  className="text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
+                >
+                  {isSignUp ? 'Sudah punya akun? Masuk di sini' : 'Belum punya akun? Daftar di sini'}
+                </button>
+              </div>
             </form>
           ) : (
             <div className="text-center space-y-6 animate-in zoom-in-95 duration-300">
@@ -123,9 +168,9 @@ export default function LoginPage() {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-zinc-100">Tautan Masuk Terkirim!</h3>
+                <h3 className="text-lg font-bold text-zinc-100">Verifikasi Email Anda</h3>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Kami telah mengirimkan tautan masuk ke <span className="font-semibold text-violet-400">{email}</span>. Silakan periksa kotak masuk dan folder spam Anda untuk melanjutkan.
+                  Kami telah mengirimkan email verifikasi ke <span className="font-semibold text-violet-400">{email}</span>. Silakan periksa kotak masuk dan konfirmasi akun Anda untuk masuk ke Sabi.
                 </p>
               </div>
 
@@ -134,6 +179,7 @@ export default function LoginPage() {
                   onClick={() => {
                     setIsSuccess(false)
                     setEmail('')
+                    setPassword('')
                   }}
                   className="text-xs font-semibold text-zinc-500 hover:text-zinc-300 transition-colors inline-flex items-center gap-1.5"
                 >
