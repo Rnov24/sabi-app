@@ -31,7 +31,11 @@ export function withErrorHandler(handler: RouteHandler): RouteHandler {
 
       console.error('Unhandled error:', error)
       
-      const errorMessage = error instanceof Error ? error.message : String(error)
+      const errorMessage = error instanceof Error
+        ? error.message
+        : (error && typeof error === 'object' && 'message' in error)
+          ? String((error as any).message)
+          : String(error)
       const details = (error as any)?.details || null
       const hint = (error as any)?.hint || null
       
