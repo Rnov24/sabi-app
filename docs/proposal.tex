@@ -1,0 +1,238 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{top=3cm, bottom=3cm, left=3cm, right=3cm, headheight=15pt}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+% Color Definitions
+\definecolor{primary}{HTML}{1A365D}   % Navy
+\definecolor{secondary}{HTML}{0D9488} % Teal / Cyan
+\definecolor{dark}{HTML}{2D3748}      % Charcoal
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    filecolor=magenta,      
+    urlcolor=primary,
+    pdftitle={Proposal Pengembangan Project: SABI (Sistem AI Belajar Interaktif)},
+    pdfauthor={SABI Dev Team},
+    pdfpagemode=UseNone,
+}
+
+\onehalfspacing
+
+% Headers and Footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{secondary}{\small Proposal Pengembangan Project: SABI (Sistem AI Belajar Interaktif)}}
+\fancyhead[R]{\textcolor{secondary}{\small SABI}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Section Numbering Formatting
+\titleformat{\section}{\normalfont\Large\bfseries\color{primary}}{\Roman{section}.}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{primary}}{\Alph{subsection}.}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\color{dark}}{\arabic{subsubsection}.}{1em}{}
+
+% Adjust spacing for section titles
+\titlespacing*{\section}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+% -------------------------------------------------------------
+% COVER PAGE
+% -------------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\large\bfseries\color{secondary} DOKUMEN PROPOSAL TEKNIS \par}
+    \vspace{1.5cm}
+    
+    {\Huge\bfseries\color{primary} PROPOSAL PENGEMBANGAN PROJECT \par}
+    \vspace{0.8cm}
+    {\Large\bfseries\color{dark} SABI: SISTEM AI BELAJAR INTERAKTIF \par}
+    \vspace{0.4cm}
+    {\large\itshape Asisten Belajar Mandiri Berbasis AI Socratic dan Spaced Repetition \par}
+    
+    \vspace{3cm}
+    
+    \begin{minipage}{0.6\textwidth}
+        \centering
+        \hrule height 2pt
+        \vspace{0.4cm}
+        {\bfseries\color{primary} KELOMPOK PENGEMBANG SABI} \\
+        \small Platform Belajar Aktif \& Kolaborasi Digital \\
+        \vspace{0.4cm}
+        \hrule
+    \end{minipage}
+    
+    \vfill
+    
+    {\large\bfseries Juni 2026 \par}
+    {\small Departemen Riset Teknologi Pendidikan dan Kecerdasan Buatan \par}
+    
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+% -------------------------------------------------------------
+% I. PENDAHULUAN
+% -------------------------------------------------------------
+\section{Pendahuluan}
+
+\subsection{Latar Belakang}
+Di era pendidikan modern, mahasiswa dituntut untuk dapat belajar secara mandiri secara efektif di tengah padatnya kurikulum perguruan tinggi. Namun, banyak mahasiswa menghadapi kesulitan dalam menstrukturkan materi belajar yang kompleks, yang sering kali berujung pada kelelahan kognitif (\textit{cognitive overload}) saat dihadapkan pada silabus mata kuliah yang tebal dan rumit.
+
+Perkembangan teknologi kecerdasan buatan (\textit{Generative AI}) saat ini telah menawarkan solusi sebagai asisten belajar. Sayangnya, mayoritas penggunaan AI saat ini masih bersifat pasif, di mana AI digunakan sebagai ``mesin penjawab'' instan. Mahasiswa cenderung langsung menyalin jawaban tanpa melalui proses pemikiran kritis (\textit{passive learning}). Metode belajar aktif yang melibatkan latihan pemanggilan kembali memori (\textit{retrieval practice}) dan penjabaran konsep dengan kata-kata sendiri (\textit{elaboration}) sangat jarang terjadi secara mandiri.
+
+Selain itu, informasi yang telah dipelajari sering kali terlupakan dengan cepat akibat kurva lupa Ebbinghaus (\textit{forgetting curve}). Teknik pengulangan berjeda (\textit{Spaced Repetition}) merupakan metode ilmiah terbukti untuk konsolidasi memori jangka panjang, namun sulit dilakukan secara manual dan teratur oleh mahasiswa. 
+
+Proyek ini mengajukan pengembangan platform \textbf{SABI (Sistem AI Belajar Interaktif)}, sebuah asisten belajar mandiri yang memadukan dialog kritis metode Socratic berbasis AI dengan penjadwalan \textit{Spaced Repetition} otomatis (menggunakan algoritma SM-2) untuk membantu mahasiswa menguasai materi secara aktif, menyenangkan, dan bertahan lama dalam ingatan jangka panjang.
+
+\subsection{Rumusan Masalah}
+Berdasarkan latar belakang di atas, rumusan masalah dalam pengembangan proyek ini adalah:
+\begin{enumerate}
+    \item Bagaimana memfasilitasi mahasiswa agar dapat memecah silabus mata kuliah yang kompleks menjadi topik-topik pembelajaran atomik yang terstruktur?
+    \item Bagaimana merancang metode belajar aktif di mana AI bertindak sebagai tutor Socratic yang memandu pemahaman mahasiswa melalui pertanyaan kritis, bukan memberikan jawaban langsung?
+    \item Bagaimana mengintegrasikan algoritma \textit{Spaced Repetition} secara otomatis untuk melacak tingkat memori mahasiswa dan menjadwalkan waktu tinjauan materi secara tepat waktu?
+    \item Bagaimana memfasilitasi kolaborasi sosial di mana mahasiswa dapat berbagi kartu pemahaman konsep dan saling bertukar ulasan?
+\end{enumerate}
+
+\subsection{Tujuan Proyek}
+Tujuan utama dari proyek pengembangan sistem ini adalah:
+\begin{enumerate}
+    \item Membangun platform web interaktif yang memungkinkan mahasiswa mengunggah silabus PDF untuk diekstraksi dan didekomposisi secara otomatis menjadi topik belajar mandiri oleh AI.
+    \item Mengembangkan modul pembelajaran Socratic AI Tutor yang menguji pemahaman mahasiswa secara dialogis hingga mencapai tingkat penguasaan konsep yang matang (\textit{mastery status}).
+    \item Mengimplementasikan mesin \textit{Spaced Repetition System} (SRS) menggunakan algoritma SuperMemo-2 (SM-2) untuk menghitung interval pengulangan kartu memori secara presisi.
+    \item Menyediakan halaman *Classroom Feed* kolaboratif bagi anggota kelas untuk saling membagikan, membaca, dan memberikan reaksi evaluasi (Bermanfaat/Kurang Jelas) pada kartu pemahaman rekan mereka.
+\end{enumerate}
+
+\subsection{Manfaat Proyek}
+Proyek pengembangan ini dirancang untuk memberikan dampak positif langsung bagi berbagai pihak:
+\begin{itemize}
+    \item \textbf{Bagi Mahasiswa:}
+    \begin{itemize}
+        \item Memiliki peta jalan belajar yang terstruktur secara otomatis dari silabus kuliah mereka.
+        \item Mencapai tingkat pemahaman konsep yang mendalam melalui bimbingan interaktif Socratic AI Tutor.
+        \item Mengingat materi kuliah lebih lama dan efisien berkat pengingat \textit{Spaced Repetition} yang disesuaikan dengan kapasitas ingatan masing-masing.
+        \item Dapat berkolaborasi dan belajar dari ringkasan pemahaman rekan sekelas melalui umpan kelas.
+    \end{itemize}
+    \item \textbf{Bagi Dosen / Institusi:}
+    \begin{itemize}
+        \item Memfasilitasi kemandirian belajar mahasiswa di luar jam kuliah formal secara terarah.
+        \item Memperoleh gambaran statistik tingkat pemahaman kelas berdasarkan kartu pencapaian belajar (*Mastery Cards*) yang dibagikan ke feed kelas.
+        \item Mendukung pembelajaran berbasis luaran (\textit{outcome-based education}) secara terukur.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Ruang Lingkup Sistem}
+Sistem yang dikembangkan mencakup fungsionalitas utama sebagai berikut:
+\begin{itemize}
+    \item \textbf{Manajemen Kelas \& Silabus:}
+    \begin{itemize}
+        \item Pembuatan kelas baru oleh pemilik kelas, lengkap dengan penomoran kode gabung (\textit{join code}) unik agar mahasiswa lain dapat bergabung.
+        \item Modul unggah silabus berbentuk PDF yang didekomposisi secara otomatis oleh AI menjadi bab dan subtopik pembelajaran.
+    \end{itemize}
+    \item \textbf{Modul Socratic AI Session:}
+    \begin{itemize}
+        \item Interaksi percakapan dengan AI tutor Socratic untuk suatu topik terpilih. AI tidak akan memberikan jawaban langsung melainkan memberikan pertanyaan pemandu beruntun hingga pengguna berhasil menjabarkan konsep dengan benar.
+        \item Penilaian status kelulusan topik belajar (\textit{Mastery status}) secara otomatis setelah dialog mencapai kriteria kelayakan pemahaman.
+    \end{itemize}
+    \item \textbf{Penerbitan \& Manajemen Mastery Card:}
+    \begin{itemize}
+        \item Konversi otomatis riwayat dialog Socratic yang sukses menjadi sebuah *Mastery Card* (Kartu Paspor Pemahaman) berupa rangkuman penjelasan terbaik mahasiswa yang diformulasikan oleh AI.
+        \item Fitur mempublikasikan Mastery Card ke halaman publik via tautan unik serta opsi membagikannya langsung ke *Classroom Feed*.
+    \end{itemize}
+    \item \textbf{Spaced Repetition System (SRS):}
+    \begin{itemize}
+        \item Halaman *Reviews* yang menampung tumpukan kartu materi belajar yang jatuh tempo tinjauan berdasarkan algoritma SM-2.
+        \item Perhitungan dinamis interval hari review berikutnya (1 hari, 3 hari, dst.) berdasarkan penilaian tingkat kemudahan (\textit{ease factor}) yang dimasukkan oleh pengguna saat sesi review.
+    \end{itemize}
+    \item \textbf{Classroom Feed \& Kolaborasi Sosial:}
+    \begin{itemize}
+        \item Aliran aktivitas kelas (*Feed*) yang menampilkan ulasan kartu pemahaman yang dibagikan secara sukarela oleh mahasiswa anggota kelas.
+        \item Sistem umpan balik interaktif berupa tombol reaksi ``Bermanfaat'' (\textit{helpful}) dan ``Kurang Jelas'' (\textit{unclear}) untuk mendorong diskusi akademik sejawat.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Metode Pengembangan}
+Metode pengembangan sistem menggunakan pendekatan siklus hidup pengembangan perangkat lunak modern yang adaptif (\textit{Agile-oriented lifecycle}) yang terdiri dari beberapa tahap:
+\begin{enumerate}
+    \item \textbf{Analisis Kebutuhan \& Desain Awal:}
+    Mendefinisikan arsitektur sistem, memetakan diagram relasi entitas basis data (ERD), dan menyusun desain UI/UX bertema Hum (bernuansa cerah, ramah, dan interaktif).
+    \item \textbf{Pengembangan Database \& RLS:}
+    Membangun tabel PostgreSQL pada Supabase dan memperketat kebijakan *Row Level Security* (RLS) guna melindungi privasi progres belajar setiap mahasiswa.
+    \item \textbf{Integrasi Layanan AI (Gemini API):}
+    Penyusunan modul prompt untuk tiga agen cerdas: parser silabus, pembimbing Socratic AI, dan pembuat ringkasan Mastery Card.
+    \item \textbf{Pengembangan Antarmuka (Frontend):}
+    Pembuatan komponen antarmuka responsif ramah seluler menggunakan Next.js dan Tailwind CSS.
+    \item \textbf{Pengujian \& UAT:}
+    Melakukan verifikasi fungsionalitas algoritma SRS SM-2 dan pengujian integrasi API LLM.
+    \item \textbf{Implementasi \& Pemeliharaan:}
+    *Deployment* sistem di Vercel, inisialisasi cloud database Supabase, dan aktivasi Vercel Cron untuk pengingat email harian otomatis bagi mahasiswa.
+\end{enumerate}
+
+\subsubsection{Rencana Anggaran Biaya (RAB)}
+Berikut adalah estimasi Rencana Anggaran Biaya untuk pengembangan awal (\textit{minimum viable product}) sistem selama durasi 3 bulan:
+\begin{table}[htbp]
+    \centering
+    \caption{Rincian Rencana Anggaran Biaya (RAB)}
+    \vspace{0.2cm}
+    \begin{tabularx}{\textwidth}{lXl}
+        \toprule
+        \textbf{Kategori} & \textbf{Deskripsi Pekerjaan / Layanan} & \textbf{Biaya (Estimasi)} \\
+        \midrule
+        \textbf{SDM / Developer} & 1 Fullstack AI Engineer, 1 UI/UX Designer, 1 QA Engineer & Rp 45.000.000,- \\
+        \textbf{Infrastruktur} & Supabase Cloud Service (Database \& PDF Storage) & Rp 1.500.000,- \\
+        \textbf{Hosting \& Deploy} & Layanan Vercel Pro \& Domain Resmi (.id / .ac.id) & Rp 1.200.000,- \\
+        \textbf{Layanan AI \& Email} & Google Gemini API \& Resend API (Otentikasi \& Email Reminder) & Rp 1.800.000,- \\
+        \textbf{Dokumentasi \& UAT} & Pengujian performa model AI \& Penyusunan panduan belajar & Rp 2.500.000,- \\
+        \midrule
+        \textbf{Total} & & \textbf{Rp 52.000.000,-} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{Teknologi yang Digunakan}
+Arsitektur teknologi yang dipilih fokus pada efisiensi biaya, kecepatan respons, dan keandalan performa:
+\begin{itemize}
+    \item \textbf{Frontend:}
+    Menggunakan \textbf{Next.js 16 (App Router)} dengan compiler \textbf{Turbopack} dan bahasa pemrograman \textbf{TypeScript} untuk rendering cepat yang optimal. Antarmuka menggunakan \textbf{Tailwind CSS v4} yang ramah perangkat seluler dan modern.
+    \item \textbf{Backend \& Database:}
+    Menggunakan \textbf{Supabase} serverless dengan database relasional \textbf{PostgreSQL}. Penanganan autentikasi login terenkripsi menggunakan **Supabase Auth** (layanan Magic Link), sedangkan file dokumen silabus PDF disimpan di **Supabase Storage**.
+    \item \textbf{Integrasi Kecerdasan Buatan (AI):}
+    Menggunakan \textbf{Google Gemini API} melalui SDK resmi `@google/genai` untuk memproses parsing silabus terstruktur serta memandu sesi dialog kritis Socratic.
+    \item \textbf{Integrasi Layanan Ketiga:}
+    Menggunakan **Resend API** untuk pengiriman notifikasi email dan pengingat harian tumpukan review yang jatuh tempo, dipicu secara otomatis oleh **Vercel Cron Jobs**.
+\end{itemize}
+
+\subsection{Output yang Dihasilkan}
+Proyek pengembangan ini ditargetkan menghasilkan 4 \textit{output} utama:
+\begin{enumerate}
+    \item \textbf{Platform Web SABI:} Website belajar interaktif yang responsif dan dapat diakses dengan mudah oleh mahasiswa melalui komputer maupun smartphone.
+    \item \textbf{Tutor AI Socratic:} Modul kecerdasan buatan terlatih yang memandu pemahaman mahasiswa secara aktif tanpa memberikan jawaban mentah.
+    \item \textbf{Sistem Tinjauan Berjeda otomatis (SRS):} Modul penjadwalan review mandiri menggunakan algoritma SM-2 yang disematkan langsung di dalam sistem akun mahasiswa.
+    \item \textbf{Classroom Feed \& Kolaborasi Sosial:} Jaringan umpan aktivitas kelas yang mendistribusikan kartu pemahaman mahasiswa, dilengkapi dengan metrik reaksi dari teman sejawat.
+\end{enumerate}
+
+\subsection{Penutup}
+Pengembangan Sistem AI Belajar Interaktif (SABI) merupakan terobosan teknologi pendidikan yang memosisikan kecerdasan buatan sebagai fasilitator kritis, bukan mesin penjawab instan. Dengan memadukan metode Socratic yang merangsang pemikiran mendalam dan algoritma *Spaced Repetition* untuk retensi jangka panjang, SABI diharapkan mampu melahirkan mahasiswa yang mandiri, berdaya pikir kritis, dan memiliki pemahaman akademik yang kokoh untuk mendukung generasi pembelajar masa depan.
+
+\end{document}
